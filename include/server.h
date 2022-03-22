@@ -29,6 +29,7 @@
 #define SERVER_H
 
 #include "connection.h"
+#include "message_handler.h"
 
 #include <memory>
 #include <vector>
@@ -72,6 +73,8 @@ class Server {
 
         /* List of registered connections */
         std::vector<std::shared_ptr<Connection>> connections;
+
+        MessageHandler mh;
 
         /* Socket for a connection waiting to be registered */
         mutable int pending_socket {Connection::no_socket};

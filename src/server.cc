@@ -27,6 +27,7 @@
 #include "server.h"
 
 #include "connection.h"
+#include "protocol.h"
 
 #include <algorithm>
 #include <arpa/inet.h> /* htons(), ntohs() */
@@ -144,4 +145,58 @@ void Server::error(const char* msg) const
 {
         std::cerr << "Class Server::" << msg << std::endl;
         exit(1);
+}
+
+int main (int argc, char* argv) {
+        using namespace Server; //Maybe??
+        using enum Protocol;
+        using std::cout;
+        for (;;) {
+                std::shared_ptr<Connection> con = waitForActivity();
+                if(!con) {
+                        con = Connection();
+                        registerConnection(con);
+                } else {
+                        message_handler = MessageHandler(con); //Alter MessageHander so we don't have to overrite every time?
+                        switch (mh.recv_code()) 
+                        {
+                                case COM_LIST_NG : 
+                                        if (mh.recv_code() != COM_END) {
+                                                deregisterConnection(conn); // Create helper to handle COM_END?
+                                                //db.list_newsgroups();
+                                        }
+
+                                        break;
+                                
+                                case COM_CREATE_NG :
+
+                                        break;
+                                        
+                                case COM_DELETE_NG :
+
+                                        break;
+
+                                case COM_LIST_ART :
+                                        
+                                        break;
+
+                                case COM_CREATE_ART : 
+
+                                        break;
+
+                                case COM_DELETE_ART :
+
+                                        break;
+
+                                case COM_GET_ART : 
+
+                                        break;
+
+                                default :
+
+
+                                
+                        }
+                }
+        }
 }
