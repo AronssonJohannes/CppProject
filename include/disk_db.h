@@ -1,3 +1,4 @@
+/*
 #ifndef DISK_DB
 #define DISK_DB
 
@@ -11,3 +12,4 @@ class Disk_database: public Database {
 }
 
 #endif
+*/

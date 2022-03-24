@@ -28,6 +28,7 @@
 
 #include "connection.h"
 #include "protocol.h"
+#include "exceptions.h"
 
 #include <algorithm>
 #include <arpa/inet.h> /* htons(), ntohs() */
@@ -38,6 +39,12 @@
 #include <sys/time.h>   /* select() */
 #include <sys/types.h>  /* socket(), bind(), select() */
 #include <unistd.h>     /* close(), select() */
+
+using std::cout;
+using std::string;
+using std::vector;
+using std::pair;
+using std::get;
 
 Server::Server(int port)
 {
@@ -147,55 +154,164 @@ void Server::error(const char* msg) const
         exit(1);
 }
 
-int main (int argc, char* argv) {
-        using namespace Server; //Maybe??
-        using enum Protocol;
-        using std::cout;
+void com_end(MessageHandler mh) {
+        if (mh.recv_code() != Protocol::COM_END) { throw ProtocolViolationException(); } //COM_END EXPECTED
+}
+
+int main (int argc, char** argv) {
+      //  using namespace Server; //Maybe??
+        
+        Server s(8887);
+        //Catch protocolviolation
         for (;;) {
-                std::shared_ptr<Connection> con = waitForActivity();
+                std::shared_ptr<Connection> con = s.waitForActivity();
                 if(!con) {
                         con = Connection();
-                        registerConnection(con);
+                        s.registerConnection(con);
                 } else {
-                        message_handler = MessageHandler(con); //Alter MessageHander so we don't have to overrite every time?
-                        switch (mh.recv_code()) 
-                        {
-                                case COM_LIST_NG : 
-                                        if (mh.recv_code() != COM_END) {
-                                                deregisterConnection(conn); // Create helper to handle COM_END?
-                                                //db.list_newsgroups();
-                                        }
+                        mh = MessageHandler(con); //Alter MessageHander so we don't have to overrite every time?
 
-                                        break;
-                                
-                                case COM_CREATE_NG :
+                        //Make big try-catch and just throw from all the cases??
+                        try {
+                                switch (mh.recv_code()) //if (mh.recv_code() != COM_END) { break; }
+                                {
 
-                                        break;
+                                        //TODO: Fix this. It's a tuple now
+                                        case Protocol::COM_LIST_NG : 
+                                                com_end();
+                                                auto ngs = db.list_newsgroups();
+                                                mh.send_code(Protocol::ANS_LIST_NG);
+                                                mh.send_int_parameter(ngs.size());
+                                                if (ngs.size()) {
+                                                        for (const auto& ng : ngs) {
+                                                                mh.send_int_parameter(get<0>(ng));
+                                                                mh.send_string_parameter(get<1>(ng));
+                                                        }
+                                                }
+                                                mh.send_code(Protocol::ANS_END);
+                                                break;
                                         
-                                case COM_DELETE_NG :
+                                        case Protocol::COM_CREATE_NG :
+                                                string s = mh.recv_string_parameter();
+                                                com_end();
+                                                mh.send_code(Protocol::ANS_CREATE_NG);
+                                                try {
+                                                        db.create_newsgroup(s);
+                                                        mh.send_code(Protocol::ANS_ACK);
+                                                } 
+                                                catch (NewsgroupException&) {
+                                                        mh.send_code(Protocol::ANS_NAK);
+                                                        mh.send_code(Protocol::ERR_NG_ALREADY_EXISTS);
+                                                }
+                                                mh.send_code(Protocol::ANS_END);
+                                                break;
+                                                
+                                        case Protocol::COM_DELETE_NG :
+                                                int id = mh.recv_int_parameter();
+                                                com_end();
+                                                mh.send_code(Protocol::ANS_DELETE_NG);
+                                                try {
+                                                        db.delete_newsgroup(id);
+                                                        mh.send_code(Protocol::ANS_ACK);
+                                                } 
+                                                catch (NewsgroupException&) {
+                                                        mh.send_code(Protocol::ANS_NAK);
+                                                        mh.send_code(Protocol::ERR_NG_DOES_NOT_EXIST);
+                                                }
+                                                mh.send_code(Protocol::ANS_END);
+                                                break;
 
-                                        break;
+                                        case Protocol::COM_LIST_ART :
+                                                int id = mh.recv_int_parameter();
+                                                com_end();
+                                                mh.send_code(Protocol::ANS_LIST_ART);
+                                                try {
+                                                        auto articles = db.list_articles();
+                                                        mh.send_code(Protocol::ANS_ACK);
+                                                        mh.send_int_parameter(articles.size());
+                                                        if (articles.size()) {
+                                                                for (const auto& art : articles) {
+                                                                        mh.send_int_parameter(get<0>(art));
+                                                                        mh.send_string_parameter(get<1>(art));
+                                                                }
+                                                        }
+                                                } 
+                                                catch (NewsgroupException&) {
+                                                        mh.send_code(Protocol::ANS_NAK);
+                                                        mh.send_code(Protocol::ERR_NG_DOES_NOT_EXIST);
+                                                }
+                                                mh.send_code(Protocol::ANS_END);
+                                                break;
 
-                                case COM_LIST_ART :
-                                        
-                                        break;
+                                        case Protocol::COM_CREATE_ART : 
+                                                int id = mh.recv_int_parameter();
+                                                string title  = mh.recv_string_parameter();
+                                                string author = mh.recv_string_parameter();
+                                                string text   = mh.recv_string_parameter();
+                                                com_end();
+                                                mh.send_code(Protocol::ANS_CREATE_ART);
+                                                try {
+                                                        db.create_article(title, author, text, id);
+                                                        mh.send_code(Protocol::ANS_ACK);
+                                                } 
+                                                catch (NewsgroupException) {
+                                                        mh.send_code(Protocol::ANS_NAK);
+                                                        mh.send_code(Protocol::ERR_NG_DOES_NOT_EXIST);
+                                                }
+                                                mh.send_code(Protocol::ANS_END);
+                                                break;
 
-                                case COM_CREATE_ART : 
 
-                                        break;
+                                        case Protocol::COM_DELETE_ART :
+                                                auto g_id = mh.recv_int_parameter();
+                                                auto a_id = mh.recv_int_parameter();
+                                                com_end();
+                                                mh.send_code(Protocol::ANS_DELETE_ART);
+                                                try {
+                                                        db.delete_article(g_id, a_id);
+                                                        mh.send_code(Protocol::ANS_ACK);
+                                                }
+                                                catch (NewsgroupException&) {
+                                                        mh.send_code(Protocol::ANS_NAK);
+                                                        mh.send_code(Protocol::ERR_NG_DOES_NOT_EXIST);
+                                                }
+                                                catch (ArticleException&) {
+                                                        mh.send_code(Protocol::ANS_NAK);
+                                                        mh.send_code(Protocol::ERR_ART_DOES_NOT_EXIST);
+                                                }
+                                                mh.send_code(Protocol::ANS_END);
+                                                break;
 
-                                case COM_DELETE_ART :
+                                        case Protocol::COM_GET_ART : 
+                                                auto g_id = mh.recv_int_parameter();
+                                                auto a_id = mh.recv_int_parameter();
+                                                com_end();
+                                                mh.send_code(Protocol::ANS_GET_ART);
+                                                try {
+                                                        auto art = db.get_article(g_id, a_id);
+                                                        mh.send_code(Protocol::ANS_ACK);
+                                                        mh.send_string_parameter(get<0>(art));
+                                                        mh.send_string_parameter(get<1>(art));
+                                                        mh.send_string_parameter(get<2>(art));
+                                                }
+                                                catch (NewsgroupException&) {
+                                                        mh.send_code(Protocol::ANS_NAK);
+                                                        mh.send_code(Protocol::ERR_NG_DOES_NOT_EXIST);
+                                                }
+                                                catch (ArticleException&) {
+                                                        mh.send_code(Protocol::ANS_NAK);
+                                                        mh.send_code(Protocol::ERR_ART_DOES_NOT_EXIST);
+                                                }
+                                                mh.send_code(Protocol::ANS_END);
+                                                break;
 
-                                        break;
-
-                                case COM_GET_ART : 
-
-                                        break;
-
-                                default :
-
-
-                                
+                                        default :
+                                                throw ProtocolViolationException(); //Commandbyte not recognized
+                                }
+                        } 
+                        catch(ProtocolViolationException& e) {
+                                s.deregisterConnection(con);
+                                std::cout << "Client did not observe proper protocol. Connection terminated.\n";   
                         }
                 }
         }

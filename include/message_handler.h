@@ -11,6 +11,7 @@
 class MessageHandler {
     public:
         MessageHandler(const std::shared_ptr<Connection>& connection): connection(connection){}
+        MessageHandler(){}
         void send_code(int code);
         void send_int(int value);
         void send_int_parameter(int param);
@@ -23,6 +24,6 @@ class MessageHandler {
         std::shared_ptr<Connection> connection;
         void send_byte(int code); //throws ConnectionClosedException
         int recv_byte(); // throws ConnectionClosedException
-}
+};
 
 #endif

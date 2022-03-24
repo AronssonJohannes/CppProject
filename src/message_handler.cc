@@ -20,12 +20,12 @@ void MessageHandler::send_int(int value){
 }
 
 void MessageHandler::send_int_parameter(int param){
-    send_code(PAR_NUM);
+    send_code(Protocol::PAR_NUM);
     send_int(param);
 }
 
 void MessageHandler::send_string_parameter(String param){
-    send_code(PAR_STRING);
+    send_code(Protocol::PAR_STRING);
     send_int(param.length());
     for(int i{0}; i < param.length(); ++i){
         send_byte(param.at(i));
@@ -50,18 +50,20 @@ int MessageHandler::recv_int(){
 
 int MessageHandler::recv_int_parameter(){
     int code() = recvCode();
-    if (code != PAR_NUM) throw ProtocolViolationException("Receive int parameter, wrong code");
+    if (code != Protocol::PAR_NUM) throw ProtocolViolationException("Receive int parameter, wrong code");
     return recv_int();
 } // throws ConnectionClosedException
 
-string MessageHandler::recv_string_parameter(){
+string MessageHandler::recv_string_parameter() {
     int code = recv_code();
-    if(code != PAR_STRING){
-        throw ProtocolViolationException("Receive string parameter, wrong code");
+    if(code != Protocol::PAR_STRING){
+        //throw ProtocolViolationException("Receive string parameter, wrong code");
+        throw ProtocolViolationException();
     }
     int n = recv_int();
     if (n < 0) {
-        throw ProtocolViolationException("Receive string parameter, num characters < 0");
+        //throw ProtocolViolationException("Receive string parameter, num characters < 0");
+        throw ProtocolViolationException();
     }
     string res = "";
     for(int i = 1; i <= n; ++i){

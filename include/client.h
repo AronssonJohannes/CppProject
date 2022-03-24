@@ -8,7 +8,7 @@ class Client {
         void start();
         void loop()
         void stop();
-        void send_recv();
+        void check_ans_error();
     private:
         MessageHandler mh;
 }

@@ -33,6 +33,7 @@
 
 #include <memory>
 #include <vector>
+#include "memory_db.h"
 
 /* A server listens to a port and handles multiple connections */
 class Server {
@@ -67,6 +68,10 @@ class Server {
                             connections(std::move(o.connections)),
                             pending_socket{o.pending_socket} {}
 
+  //        include/server.h:69:60: error: no matching function for call to ‘MessageHandler::MessageHandler()’
+  //  69 |                             pending_socket{o.pending_socket} {}
+  //     |                                                            ^
+
       protected:
         /* The number of the communication socket */
         int my_socket {Connection::no_socket};
@@ -74,10 +79,12 @@ class Server {
         /* List of registered connections */
         std::vector<std::shared_ptr<Connection>> connections;
 
-        MessageHandler mh;
-
         /* Socket for a connection waiting to be registered */
         mutable int pending_socket {Connection::no_socket};
+
+        MessageHandler mh;
+
+        InMemoryDB db;
 
         /* Prints error message and exita */
         void error(const char* msg) const;
