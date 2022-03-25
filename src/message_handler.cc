@@ -1,15 +1,14 @@
 #include "message_handler.h"
 
 using std::string;
-using enum Protocol;
 
 //MessageHandler(std::shared_ptr<Connection> connection): connection(connection){}
 void MessageHandler::send_byte(int code){
-    *connection.write(code);
+    (*connection).write(code);
 } //throws ConnectionClosedException
 
-void MessageHandler::send_code(int code){
-    send_byte(code);
+void MessageHandler::send_code(Protocol code){
+    send_byte(static_cast<int>(code));
 }
 
 void MessageHandler::send_int(int value){
@@ -24,20 +23,21 @@ void MessageHandler::send_int_parameter(int param){
     send_int(param);
 }
 
-void MessageHandler::send_string_parameter(String param){
+void MessageHandler::send_string_parameter(const string& param){
     send_code(Protocol::PAR_STRING);
     send_int(param.length());
-    for(int i{0}; i < param.length(); ++i){
+    for(size_t i{0}; i < param.length(); ++i){
         send_byte(param.at(i));
     }
 }
 
 int MessageHandler::recv_byte(){
-    return *connection.read();
+    return (*connection).read();
 } // throws ConnectionClosedException
 
-int MessageHandler::recv_code(){
-    return recv_byte();
+Protocol MessageHandler::recv_code(){
+    Protocol code = static_cast<Protocol>(recv_byte());
+    return code;
 } // throws ConnectionClosedException
 
 int MessageHandler::recv_int(){
@@ -49,13 +49,13 @@ int MessageHandler::recv_int(){
 } // throws ConnectionClosedException
 
 int MessageHandler::recv_int_parameter(){
-    int code() = recvCode();
-    if (code != Protocol::PAR_NUM) throw ProtocolViolationException("Receive int parameter, wrong code");
+    Protocol code = static_cast<Protocol>(recv_code());
+    if (code != Protocol::PAR_NUM) throw ProtocolViolationException();
     return recv_int();
 } // throws ConnectionClosedException
 
 string MessageHandler::recv_string_parameter() {
-    int code = recv_code();
+    Protocol code = static_cast<Protocol>(recv_code());
     if(code != Protocol::PAR_STRING){
         //throw ProtocolViolationException("Receive string parameter, wrong code");
         throw ProtocolViolationException();
@@ -67,7 +67,7 @@ string MessageHandler::recv_string_parameter() {
     }
     string res = "";
     for(int i = 1; i <= n; ++i){
-        char ch = connection.read(); // c cast? or static cast? char ch = (char) conn.read();
+        char ch = connection->read(); // c cast? or static cast? char ch = (char) conn.read();
         res += ch;
     }
     return res;

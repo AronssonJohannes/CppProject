@@ -61,23 +61,26 @@ void InMemoryDB::delete_article(int article_id, int newsgroup_id){
     }
     auto vec = db.at(newsgroup_id);
     auto it = std::find_if(vec.begin(), vec.end(), 
-            [article_id](const article& article){return article.id == article_id;}, vec.end());
+            [article_id](const article& article){ return article.id == article_id;} );
 
     if(it == vec.end()){
         throw ArticleException();
     }
-    vec.erase(it)
+    vec.erase(it);
 }
+
+// error: no matching function for call to ‘find_if(std::vector<InMemoryDB::article>::iterator, std::vector<InMemoryDB::article>::iterator, InMemoryDB::delete_article(int, int)::<lambda(const InMemoryDB::article&)>, std::vector<InMemoryDB::article>::iterator)’
+//    64 |             [article_id](const article& article){return article.id == article_id;}, vec.end());
 
 tuple<string, string, string> InMemoryDB::get_article(int article_id, int newsgroup_id){
     if(ng_names.find(newsgroup_id) == ng_names.end()){
         throw NewsgroupException();
     }
-    auto v = db.at(newsgroup_id);
+    auto vec = db.at(newsgroup_id);
     auto it = std::find_if(vec.begin(), vec.end(), 
-            [article_id](const article& article){return article.id == article_id;}, vec.end());
+            [article_id](const article& article){return article.id == article_id;});
     if(it == vec.end()){
         throw ArticleException();
     }
-    return std::make_tuple(a.title, a.author, a.text);
+    return std::make_tuple(it->title, it->author, it->text);
 }

@@ -3,6 +3,7 @@
 
 #include "protocol.h"
 #include "connection.h"
+#include "exceptions.h"
 
 #include <memory>
 #include <string>
@@ -10,13 +11,13 @@
 
 class MessageHandler {
     public:
-        MessageHandler(const std::shared_ptr<Connection>& connection): connection(connection){}
+        MessageHandler(const std::shared_ptr<Connection>& conn): connection(conn){}
         MessageHandler(){}
-        void send_code(int code);
+        void send_code(Protocol code);
         void send_int(int value);
         void send_int_parameter(int param);
         void send_string_parameter(const std::string& param);
-        int recv_code(); // throws ConnectionClosedException
+        Protocol recv_code(); // throws ConnectionClosedException
         int recv_int(); // throws ConnectionClosedException
         int recv_int_parameter(); // throws ConnectionClosedException
         std::string recv_string_parameter(); // throws ConnectionClosedException
