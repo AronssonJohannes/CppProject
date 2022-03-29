@@ -6,5 +6,5 @@ CXX_FLAGS = -O2 -g -DNDEBUG -Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wc
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I"/mnt/d/School/EDAF50 - C++/CppProject/include" -I"/mnt/d/School/EDAF50 - C++/CppProject/src" 
+CXX_INCLUDES = -I/mnt/c/Users/johan/git/CppProject/include -I/mnt/c/Users/johan/git/CppProject/src 
 

@@ -1,4 +1,4 @@
-# Install script for directory: /mnt/d/School/EDAF50 - C++/CppProject/src
+# Install script for directory: /mnt/c/Users/johan/git/CppProject/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

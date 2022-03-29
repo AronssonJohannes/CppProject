@@ -4,11 +4,11 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/mnt/d/School/EDAF50 - C++/CppProject/src/connection.cc" "/mnt/d/School/EDAF50 - C++/CppProject/CMakeFiles/clientserver.dir/src/connection.cc.o"
-  "/mnt/d/School/EDAF50 - C++/CppProject/src/memory_db.cc" "/mnt/d/School/EDAF50 - C++/CppProject/CMakeFiles/clientserver.dir/src/memory_db.cc.o"
-  "/mnt/d/School/EDAF50 - C++/CppProject/src/message_handler.cc" "/mnt/d/School/EDAF50 - C++/CppProject/CMakeFiles/clientserver.dir/src/message_handler.cc.o"
-  "/mnt/d/School/EDAF50 - C++/CppProject/src/ourserver.cc" "/mnt/d/School/EDAF50 - C++/CppProject/CMakeFiles/clientserver.dir/src/ourserver.cc.o"
-  "/mnt/d/School/EDAF50 - C++/CppProject/src/server.cc" "/mnt/d/School/EDAF50 - C++/CppProject/CMakeFiles/clientserver.dir/src/server.cc.o"
+  "/mnt/c/Users/johan/git/CppProject/src/connection.cc" "/mnt/c/Users/johan/git/CppProject/CMakeFiles/clientserver.dir/src/connection.cc.o"
+  "/mnt/c/Users/johan/git/CppProject/src/memory_db.cc" "/mnt/c/Users/johan/git/CppProject/CMakeFiles/clientserver.dir/src/memory_db.cc.o"
+  "/mnt/c/Users/johan/git/CppProject/src/message_handler.cc" "/mnt/c/Users/johan/git/CppProject/CMakeFiles/clientserver.dir/src/message_handler.cc.o"
+  "/mnt/c/Users/johan/git/CppProject/src/ourserver.cc" "/mnt/c/Users/johan/git/CppProject/CMakeFiles/clientserver.dir/src/ourserver.cc.o"
+  "/mnt/c/Users/johan/git/CppProject/src/server.cc" "/mnt/c/Users/johan/git/CppProject/CMakeFiles/clientserver.dir/src/server.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

@@ -1,4 +1,4 @@
-# Install script for directory: /mnt/d/School/EDAF50 - C++/CppProject
+# Install script for directory: /mnt/c/Users/johan/git/CppProject
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,12 +39,12 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/mnt/d/School/EDAF50 - C++/CppProject/src/cmake_install.cmake")
+  include("/mnt/c/Users/johan/git/CppProject/src/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/mnt/d/School/EDAF50 - C++/CppProject/example/cmake_install.cmake")
+  include("/mnt/c/Users/johan/git/CppProject/example/cmake_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -55,5 +55,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/mnt/d/School/EDAF50 - C++/CppProject/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/mnt/c/Users/johan/git/CppProject/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

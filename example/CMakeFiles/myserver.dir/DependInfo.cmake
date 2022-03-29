@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/mnt/d/School/EDAF50 - C++/CppProject/example/myserver.cc" "/mnt/d/School/EDAF50 - C++/CppProject/example/CMakeFiles/myserver.dir/myserver.cc.o"
+  "/mnt/c/Users/johan/git/CppProject/example/myserver.cc" "/mnt/c/Users/johan/git/CppProject/example/CMakeFiles/myserver.dir/myserver.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -16,7 +16,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/mnt/d/School/EDAF50 - C++/CppProject/CMakeFiles/clientserver.dir/DependInfo.cmake"
+  "/mnt/c/Users/johan/git/CppProject/CMakeFiles/clientserver.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

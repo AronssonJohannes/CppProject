@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/mnt/d/School/EDAF50 - C++/CppProject"
+CMAKE_SOURCE_DIR = /mnt/c/Users/johan/git/CppProject
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/mnt/d/School/EDAF50 - C++/CppProject"
+CMAKE_BINARY_DIR = /mnt/c/Users/johan/git/CppProject
 
 # Include any dependencies generated for this target.
 include CMakeFiles/clientserver.dir/depend.make
@@ -59,68 +59,68 @@ include CMakeFiles/clientserver.dir/flags.make
 
 CMakeFiles/clientserver.dir/src/connection.cc.o: CMakeFiles/clientserver.dir/flags.make
 CMakeFiles/clientserver.dir/src/connection.cc.o: src/connection.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/d/School/EDAF50 - C++/CppProject/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/clientserver.dir/src/connection.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/clientserver.dir/src/connection.cc.o -c "/mnt/d/School/EDAF50 - C++/CppProject/src/connection.cc"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/johan/git/CppProject/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/clientserver.dir/src/connection.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/clientserver.dir/src/connection.cc.o -c /mnt/c/Users/johan/git/CppProject/src/connection.cc
 
 CMakeFiles/clientserver.dir/src/connection.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/clientserver.dir/src/connection.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/d/School/EDAF50 - C++/CppProject/src/connection.cc" > CMakeFiles/clientserver.dir/src/connection.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/johan/git/CppProject/src/connection.cc > CMakeFiles/clientserver.dir/src/connection.cc.i
 
 CMakeFiles/clientserver.dir/src/connection.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/clientserver.dir/src/connection.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/d/School/EDAF50 - C++/CppProject/src/connection.cc" -o CMakeFiles/clientserver.dir/src/connection.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/johan/git/CppProject/src/connection.cc -o CMakeFiles/clientserver.dir/src/connection.cc.s
 
 CMakeFiles/clientserver.dir/src/server.cc.o: CMakeFiles/clientserver.dir/flags.make
 CMakeFiles/clientserver.dir/src/server.cc.o: src/server.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/d/School/EDAF50 - C++/CppProject/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/clientserver.dir/src/server.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/clientserver.dir/src/server.cc.o -c "/mnt/d/School/EDAF50 - C++/CppProject/src/server.cc"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/johan/git/CppProject/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/clientserver.dir/src/server.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/clientserver.dir/src/server.cc.o -c /mnt/c/Users/johan/git/CppProject/src/server.cc
 
 CMakeFiles/clientserver.dir/src/server.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/clientserver.dir/src/server.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/d/School/EDAF50 - C++/CppProject/src/server.cc" > CMakeFiles/clientserver.dir/src/server.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/johan/git/CppProject/src/server.cc > CMakeFiles/clientserver.dir/src/server.cc.i
 
 CMakeFiles/clientserver.dir/src/server.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/clientserver.dir/src/server.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/d/School/EDAF50 - C++/CppProject/src/server.cc" -o CMakeFiles/clientserver.dir/src/server.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/johan/git/CppProject/src/server.cc -o CMakeFiles/clientserver.dir/src/server.cc.s
 
 CMakeFiles/clientserver.dir/src/memory_db.cc.o: CMakeFiles/clientserver.dir/flags.make
 CMakeFiles/clientserver.dir/src/memory_db.cc.o: src/memory_db.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/d/School/EDAF50 - C++/CppProject/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/clientserver.dir/src/memory_db.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/clientserver.dir/src/memory_db.cc.o -c "/mnt/d/School/EDAF50 - C++/CppProject/src/memory_db.cc"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/johan/git/CppProject/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/clientserver.dir/src/memory_db.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/clientserver.dir/src/memory_db.cc.o -c /mnt/c/Users/johan/git/CppProject/src/memory_db.cc
 
 CMakeFiles/clientserver.dir/src/memory_db.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/clientserver.dir/src/memory_db.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/d/School/EDAF50 - C++/CppProject/src/memory_db.cc" > CMakeFiles/clientserver.dir/src/memory_db.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/johan/git/CppProject/src/memory_db.cc > CMakeFiles/clientserver.dir/src/memory_db.cc.i
 
 CMakeFiles/clientserver.dir/src/memory_db.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/clientserver.dir/src/memory_db.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/d/School/EDAF50 - C++/CppProject/src/memory_db.cc" -o CMakeFiles/clientserver.dir/src/memory_db.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/johan/git/CppProject/src/memory_db.cc -o CMakeFiles/clientserver.dir/src/memory_db.cc.s
 
 CMakeFiles/clientserver.dir/src/message_handler.cc.o: CMakeFiles/clientserver.dir/flags.make
 CMakeFiles/clientserver.dir/src/message_handler.cc.o: src/message_handler.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/d/School/EDAF50 - C++/CppProject/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/clientserver.dir/src/message_handler.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/clientserver.dir/src/message_handler.cc.o -c "/mnt/d/School/EDAF50 - C++/CppProject/src/message_handler.cc"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/johan/git/CppProject/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/clientserver.dir/src/message_handler.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/clientserver.dir/src/message_handler.cc.o -c /mnt/c/Users/johan/git/CppProject/src/message_handler.cc
 
 CMakeFiles/clientserver.dir/src/message_handler.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/clientserver.dir/src/message_handler.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/d/School/EDAF50 - C++/CppProject/src/message_handler.cc" > CMakeFiles/clientserver.dir/src/message_handler.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/johan/git/CppProject/src/message_handler.cc > CMakeFiles/clientserver.dir/src/message_handler.cc.i
 
 CMakeFiles/clientserver.dir/src/message_handler.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/clientserver.dir/src/message_handler.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/d/School/EDAF50 - C++/CppProject/src/message_handler.cc" -o CMakeFiles/clientserver.dir/src/message_handler.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/johan/git/CppProject/src/message_handler.cc -o CMakeFiles/clientserver.dir/src/message_handler.cc.s
 
 CMakeFiles/clientserver.dir/src/ourserver.cc.o: CMakeFiles/clientserver.dir/flags.make
 CMakeFiles/clientserver.dir/src/ourserver.cc.o: src/ourserver.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/d/School/EDAF50 - C++/CppProject/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/clientserver.dir/src/ourserver.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/clientserver.dir/src/ourserver.cc.o -c "/mnt/d/School/EDAF50 - C++/CppProject/src/ourserver.cc"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/johan/git/CppProject/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/clientserver.dir/src/ourserver.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/clientserver.dir/src/ourserver.cc.o -c /mnt/c/Users/johan/git/CppProject/src/ourserver.cc
 
 CMakeFiles/clientserver.dir/src/ourserver.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/clientserver.dir/src/ourserver.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/d/School/EDAF50 - C++/CppProject/src/ourserver.cc" > CMakeFiles/clientserver.dir/src/ourserver.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/johan/git/CppProject/src/ourserver.cc > CMakeFiles/clientserver.dir/src/ourserver.cc.i
 
 CMakeFiles/clientserver.dir/src/ourserver.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/clientserver.dir/src/ourserver.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/d/School/EDAF50 - C++/CppProject/src/ourserver.cc" -o CMakeFiles/clientserver.dir/src/ourserver.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/johan/git/CppProject/src/ourserver.cc -o CMakeFiles/clientserver.dir/src/ourserver.cc.s
 
 # Object files for target clientserver
 clientserver_OBJECTS = \
@@ -140,7 +140,7 @@ libclientserver.a: CMakeFiles/clientserver.dir/src/message_handler.cc.o
 libclientserver.a: CMakeFiles/clientserver.dir/src/ourserver.cc.o
 libclientserver.a: CMakeFiles/clientserver.dir/build.make
 libclientserver.a: CMakeFiles/clientserver.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/mnt/d/School/EDAF50 - C++/CppProject/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX static library libclientserver.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/c/Users/johan/git/CppProject/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX static library libclientserver.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/clientserver.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/clientserver.dir/link.txt --verbose=$(VERBOSE)
 
@@ -154,6 +154,6 @@ CMakeFiles/clientserver.dir/clean:
 .PHONY : CMakeFiles/clientserver.dir/clean
 
 CMakeFiles/clientserver.dir/depend:
-	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/mnt/d/School/EDAF50 - C++/CppProject" "/mnt/d/School/EDAF50 - C++/CppProject" "/mnt/d/School/EDAF50 - C++/CppProject" "/mnt/d/School/EDAF50 - C++/CppProject" "/mnt/d/School/EDAF50 - C++/CppProject/CMakeFiles/clientserver.dir/DependInfo.cmake" --color=$(COLOR)
+	cd /mnt/c/Users/johan/git/CppProject && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /mnt/c/Users/johan/git/CppProject /mnt/c/Users/johan/git/CppProject /mnt/c/Users/johan/git/CppProject /mnt/c/Users/johan/git/CppProject /mnt/c/Users/johan/git/CppProject/CMakeFiles/clientserver.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/clientserver.dir/depend
 
