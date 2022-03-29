@@ -36,3 +36,9 @@ CMakeCache.txt
 *.cmake
 /CMakeFiles/
 compile_compiles.json
+
+main_client
+main_memory
+main_disk
+myclient
+myserver
