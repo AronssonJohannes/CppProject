@@ -29,7 +29,6 @@
 #define SERVER_H
 
 #include "connection.h"
-#include "message_handler.h"
 
 #include <memory>
 #include <vector>

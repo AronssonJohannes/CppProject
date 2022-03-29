@@ -30,5 +30,6 @@ endmacro()
 add_program(myserver myserver.cc)
 add_program(myclient myclient.cc)
 add_program(main_memory main_memory.cc)
+add_program(main_client main_client.cc)
 
-install(TARGETS myserver myclient main_memory)
+install(TARGETS myserver myclient main_memory main_client)

@@ -1,36 +1,65 @@
 #include "client.h"
-#include "protcol.h"
-#include "string"
+#include "protocol.h"
+#include <string>
+#include <iostream>
+
+#include <memory>
 
 using std::cout;
 using std::cin;
 using std::endl;
-using std::string
+using std::string;
 
-Client::Client(Connection& con){
-    mh(con);
-}
-
-Client::start(){
+void Client::begin(){
     cout << "Welcome to the News Application!" << endl;
-    loop();
+    news_loop();
 }
 
-Client::loop(){
+void Client::make_cmds(){
+    cmds.push_back("list ng");
+    cmds.push_back("create ng");
+    cmds.push_back("add ng");
+    cmds.push_back("rm ng");
+    cmds.push_back("del ng");
+    cmds.push_back("list art");
+    cmds.push_back("get art");
+    cmds.push_back("read art");
+    cmds.push_back("create art");
+    cmds.push_back("add art");
+    cmds.push_back("rm art");
+    cmds.push_back("del art");
+    cmds.push_back("quit");
+    cmds.push_back("stop");
+    cmds.push_back("end");
+
+}
+
+void Client::news_loop(){
     bool cont = true;
     while(cont){
-        cout << "news $";
+        cout << "news$ ";
         string inp;
-        cin >> inp;
-        switch (inp) {
-            case "list ng"  :
+        //cin >> inp;
+        getline(cin, inp);
+        int inp_int{0};
+
+        //get index 
+        for (string s : cmds){
+            if(s.compare(inp) == 0)
+                break;
+            inp_int++;
+        }
+        //cout << "input_int: " << inp_int << endl;
+        switch (inp_int) {
+            case 0  :   //list ng
                 try {
                     mh.send_code(Protocol::COM_LIST_NG);
                     mh.send_code(Protocol::COM_END); //ANS_LIST_NG num_p [num_p string_p]* ANS_END
                     check_ans_error();
-                    int size = mh.recv_code();
+                    int size = mh.recv_int_parameter();
                     for (int i = 0; i < size; i++){
-                        cout << i << "- " << mh.recv_string_parameter() << endl;
+
+                        cout << mh.recv_int_parameter() << " - " << mh.recv_string_parameter() << endl;
                     }
                     check_ans_error();
                 } catch (const std::exception& e) {
@@ -38,13 +67,13 @@ Client::loop(){
                 }
                 break;
 
-            case "create ng":
-            case "add ng"   :
+            case 1   :   //create or add ng
+            case 2   :
                 try {
                     mh.send_code(Protocol::COM_CREATE_NG);
                     cout << "Choose a Newsgroup Name: ";
                     string para;
-                    cin >> para;
+                    getline(cin, para);
                     mh.send_string_parameter(para);
                     mh.send_code(Protocol::COM_END);
                     endl(cout);
@@ -54,13 +83,15 @@ Client::loop(){
                 }
                 break;
 
-            case "rm ng"    :
-            case "del ng"   :
+            case 3    :   //rm or del ng
+            case 4    :
                 try {
                     mh.send_code(Protocol::COM_DELETE_NG);
                     cout << "Choose a Newsgroup Number:";
                     int para;
-                    cin >> para;
+                    string str_para;
+                    getline(cin, str_para);
+                    para = stoi(str_para);
                     mh.send_int_parameter(para);
                     mh.send_code(Protocol::COM_END);
                     endl(cout);
@@ -70,17 +101,19 @@ Client::loop(){
                 }
                 break;
 
-            case "list art" :
+            case 5      :   //list art
                 try {
                     mh.send_code(Protocol::COM_LIST_ART);
                     cout << "Choose a Newsgroup Number:";
                     int para;
-                    cin >> para;
+                    string str_para;
+                    getline(cin, str_para);
+                    para = stoi(str_para);
                     mh.send_int_parameter(para);
                     mh.send_code(Protocol::COM_END);
                     endl(cout);
                     check_ans_error();
-                    int size = mh.recv_code();
+                    int size = mh.recv_int_parameter();
                     for (int i = 0; i < size; i++){
                         cout << i << "- " << mh.recv_string_parameter() << endl;
                     }
@@ -90,18 +123,22 @@ Client::loop(){
                 }
                 break;
 
-            case "get art"  :
-            case "read art" :
+            case 6  :   //get or read art
+            case 7  :
                 try {
                     mh.send_code(Protocol::COM_GET_ART);
                     cout << "Choose a Newsgroup Number:";
                     int para;
-                    cin >> para;
+                    string str_para;
+                    getline(cin, str_para);
+                    para = stoi(str_para);
                     mh.send_int_parameter(para);
                     endl(cout);
                     cout << "Choose a Article Number:";
                     int para2;
-                    cin >> para2;
+                    string str_para2;
+                    getline(cin, str_para2);
+                    para2 = stoi(str_para2);
                     mh.send_int_parameter(para2);
                     mh.send_code(Protocol::COM_END);
                     endl(cout);
@@ -109,9 +146,9 @@ Client::loop(){
                     cout << "List of Articles: ";
                     if(mh.recv_code() == Protocol::ANS_ACK) {
                         cout << "Successful.\n";
-                        cout << "Title: " << mh.recv_string_parameter << endl;
-                        cout << "Author: " << mh.recv_string_parameter << endl;
-                        cout << "Content: \n" << mh.recv_string_parameter << endl;
+                        cout << "Title: " << mh.recv_string_parameter() << endl;
+                        cout << "Author: " << mh.recv_string_parameter() << endl;
+                        cout << "Content: \n" << mh.recv_string_parameter() << endl;
                     } else {
                         cout << "Failed.\n";
                         check_ans_error();
@@ -121,28 +158,30 @@ Client::loop(){
                 }
                 break;
 
-            case "create art"   :
-            case "add art"  :
+            case 8      :    //create or add art
+            case 9      :
                 try {
                     mh.send_code(Protocol::COM_CREATE_NG);
                     cout << "Choose a Newsgroup Number: ";
                     int para;
-                    cin >> para;
+                    string str_para;
+                    getline(cin, str_para);
+                    para = stoi(str_para);
                     mh.send_int_parameter(para);
                     endl(cout);
                     cout << "Title: ";
                     string para2;
-                    cin >> para2;
+                    getline(cin, para2);
                     mh.send_string_parameter(para2);
                     endl(cout);
                     cout << "Author: ";
                     string para3;
-                    cin >> para3;
+                    getline(cin, para3);
                     mh.send_string_parameter(para3);
                     endl(cout);
                     cout << "Content: \n";
                     string para4;
-                    cin >> para4;
+                    getline(cin, para4);
                     mh.send_string_parameter(para4);
                     endl(cout);
                     mh.send_code(Protocol::COM_END);
@@ -153,19 +192,23 @@ Client::loop(){
                 }
                 break;
 
-            case "rm art"   :
-            case "del art"  :
+            case 10    :   //rm or del art
+            case 11    :
                 try {
                     mh.send_code(Protocol::COM_DELETE_ART);
                     cout << "Choose a Newsgroup Number:";
                     int para;
-                    cin >> para;
+                    string str_para;
+                    getline(cin, str_para);
+                    para = stoi(str_para);
                     mh.send_int_parameter(para);
                     endl(cout);
                     cout << "Choose a Article Number:";
-                    int para;
-                    cin >> para;
-                    mh.send_int_parameter(para);
+                    int para2;
+                    string str_para2;
+                    getline(cin, str_para2);
+                    para2 = stoi(str_para2);
+                    mh.send_int_parameter(para2);
                     mh.send_code(Protocol::COM_END);
                     endl(cout);
                     check_ans_error();
@@ -174,9 +217,9 @@ Client::loop(){
                 }
                 break;
 
-            case "quit"     :
-            case "stop"     :
-                stop();
+            case 12     :   //quit or stop
+            case 13     :
+                news_loop();
                 cont = false;
                 break;
 
@@ -185,67 +228,63 @@ Client::loop(){
                 cout << "Invalid Input. Please specify object (newsgroup (ng) or article (art)).\n";
                 cout << "Example: add ng\n";
         }
-        << endl;
+        endl(cout);
     }
 }
 
-Client::stop(){
+void Client::news_stop(){
 //TODO
 }
 
-Client::check_ans_error(){
-    int ans = mh.recv_code();
-        while(ans != Protocol::ANS_END){
-            switch (ans) {
-                case Protocol::ANS_LIST_NG:
-                    cout << "Listing Newsgroups:\n";
-                    ans = Protocol::ANS_END;
-                    break;
-                case Protocol::ANS_CREATE_NG:
-                    cout << "Add Newsgroup: ";
-                    break;
-                case Protocol::ANS_DELETE_NG:
-                    cout << "Deleting Newsgroup: ";
-                    break;
-                case Protocol::ANS_LIST_ART:
-                    cout << "Listing Articles:\n";
-                    ans = Protocol::ANS_END;
-                    break;
-                case Protocol::ANS_CREATE_ART:
-                    cout << "Add Article: ";
-                    break;
-                case Protocol::ANS_DELETE_ART:
-                    cout << "Deleting Article: ";
-                    break;
-                case: Protocol::ANS_GET_ART:
-                    cout << "Retreiving Article: ":
-                    break;
-                case Protocol::ANS_ACK:
-                    cout << "Successful.\n";
-                    break;
-                case Protocol::ANS_NACK:
-                    cout << "Failed.\n";
-                    break;
-                case Protocol::ERR_ART_DOES_NOT_EXIST:
-                    cout << "Error: Article does not exist.\n";
-                    break;
-                case Protocol::ERR_NG_ALREADY_EXISTS:
-                    cout << "Error: Newsgroup already exists.\n";
-                    break;
-                case Protocol::ERR_NG_DOES_NOT_EXIST:
-                    cout << "Error: Newsgroup does not exist.\n";
-                    break;
-            }
-            ans = mh.recv_code();
+void Client::check_ans_error(){
+    Protocol ans = mh.recv_code();
+    //cout << "answer: " << static_cast<int>(ans) << endl;
+    while(ans != Protocol::ANS_END){
+        switch (ans) {
+            case Protocol::ANS_LIST_NG:
+                cout << "Listing Newsgroups:\n";
+                ans = Protocol::ANS_END;
+                break;
+            case Protocol::ANS_CREATE_NG:
+                cout << "Add Newsgroup: ";
+                ans = mh.recv_code();
+                break;
+            case Protocol::ANS_DELETE_NG:
+                cout << "Deleting Newsgroup: ";
+                ans = mh.recv_code();
+                break;
+            case Protocol::ANS_LIST_ART:
+                cout << "Listing Articles:\n";
+                ans = Protocol::ANS_END;
+                break;
+            case Protocol::ANS_CREATE_ART:
+                cout << "Add Article: ";
+                break;
+            case Protocol::ANS_DELETE_ART:
+                cout << "Deleting Article: ";
+                break;
+            case Protocol::ANS_GET_ART:
+                cout << "Retreiving Article: ";
+                break;
+            case Protocol::ANS_ACK:
+                cout << "Successful.\n";
+                ans = mh.recv_code();
+                break;
+            case Protocol::ANS_NAK:
+                cout << "Failed.\n";
+                ans = mh.recv_code();
+                break;
+            case Protocol::ERR_ART_DOES_NOT_EXIST:
+                cout << "Error: Article does not exist.\n";
+                break;
+            case Protocol::ERR_NG_ALREADY_EXISTS:
+                cout << "Error: Newsgroup already exists.\n";
+                break;
+            case Protocol::ERR_NG_DOES_NOT_EXIST:
+                cout << "Error: Newsgroup does not exist.\n";
+                break;
         }
+            //ans = mh.recv_code();
+    }
 }
 
-int main(int argc, char **argv) { //skickar host o port
-    //TODO
-    char* host = "bob";
-    int port = 8888;
-
-    Connection c(host, port);
-    Client client(c);
-    client.start();
-}

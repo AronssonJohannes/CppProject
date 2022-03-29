@@ -196,6 +196,19 @@ myclient/fast:
 .PHONY : myclient/fast
 
 #=============================================================================
+# Target rules for targets named main_client
+
+# Build rule for target.
+main_client: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 main_client
+.PHONY : main_client
+
+# fast build rule for target.
+main_client/fast:
+	$(MAKE) -f example/CMakeFiles/main_client.dir/build.make example/CMakeFiles/main_client.dir/build
+.PHONY : main_client/fast
+
+#=============================================================================
 # Target rules for targets named myserver
 
 # Build rule for target.
@@ -207,6 +220,33 @@ myserver: cmake_check_build_system
 myserver/fast:
 	$(MAKE) -f example/CMakeFiles/myserver.dir/build.make example/CMakeFiles/myserver.dir/build
 .PHONY : myserver/fast
+
+src/client.o: src/client.cc.o
+
+.PHONY : src/client.o
+
+# target to build an object file
+src/client.cc.o:
+	$(MAKE) -f CMakeFiles/clientserver.dir/build.make CMakeFiles/clientserver.dir/src/client.cc.o
+.PHONY : src/client.cc.o
+
+src/client.i: src/client.cc.i
+
+.PHONY : src/client.i
+
+# target to preprocess a source file
+src/client.cc.i:
+	$(MAKE) -f CMakeFiles/clientserver.dir/build.make CMakeFiles/clientserver.dir/src/client.cc.i
+.PHONY : src/client.cc.i
+
+src/client.s: src/client.cc.s
+
+.PHONY : src/client.s
+
+# target to generate assembly for a file
+src/client.cc.s:
+	$(MAKE) -f CMakeFiles/clientserver.dir/build.make CMakeFiles/clientserver.dir/src/client.cc.s
+.PHONY : src/client.cc.s
 
 src/connection.o: src/connection.cc.o
 
@@ -358,7 +398,11 @@ help:
 	@echo "... clientserver"
 	@echo "... main_memory"
 	@echo "... myclient"
+	@echo "... main_client"
 	@echo "... myserver"
+	@echo "... src/client.o"
+	@echo "... src/client.i"
+	@echo "... src/client.s"
 	@echo "... src/connection.o"
 	@echo "... src/connection.i"
 	@echo "... src/connection.s"

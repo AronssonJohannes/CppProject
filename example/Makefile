@@ -187,6 +187,21 @@ myclient/fast:
 .PHONY : myclient/fast
 
 # Convenience name for target.
+example/CMakeFiles/main_client.dir/rule:
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f CMakeFiles/Makefile2 example/CMakeFiles/main_client.dir/rule
+.PHONY : example/CMakeFiles/main_client.dir/rule
+
+# Convenience name for target.
+main_client: example/CMakeFiles/main_client.dir/rule
+
+.PHONY : main_client
+
+# fast build rule for target.
+main_client/fast:
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/main_client.dir/build.make example/CMakeFiles/main_client.dir/build
+.PHONY : main_client/fast
+
+# Convenience name for target.
 example/CMakeFiles/myserver.dir/rule:
 	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f CMakeFiles/Makefile2 example/CMakeFiles/myserver.dir/rule
 .PHONY : example/CMakeFiles/myserver.dir/rule
@@ -200,6 +215,33 @@ myserver: example/CMakeFiles/myserver.dir/rule
 myserver/fast:
 	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/myserver.dir/build.make example/CMakeFiles/myserver.dir/build
 .PHONY : myserver/fast
+
+main_client.o: main_client.cc.o
+
+.PHONY : main_client.o
+
+# target to build an object file
+main_client.cc.o:
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/main_client.dir/build.make example/CMakeFiles/main_client.dir/main_client.cc.o
+.PHONY : main_client.cc.o
+
+main_client.i: main_client.cc.i
+
+.PHONY : main_client.i
+
+# target to preprocess a source file
+main_client.cc.i:
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/main_client.dir/build.make example/CMakeFiles/main_client.dir/main_client.cc.i
+.PHONY : main_client.cc.i
+
+main_client.s: main_client.cc.s
+
+.PHONY : main_client.s
+
+# target to generate assembly for a file
+main_client.cc.s:
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/main_client.dir/build.make example/CMakeFiles/main_client.dir/main_client.cc.s
+.PHONY : main_client.cc.s
 
 main_memory.o: main_memory.cc.o
 
@@ -296,7 +338,11 @@ help:
 	@echo "... main_memory"
 	@echo "... edit_cache"
 	@echo "... myclient"
+	@echo "... main_client"
 	@echo "... myserver"
+	@echo "... main_client.o"
+	@echo "... main_client.i"
+	@echo "... main_client.s"
 	@echo "... main_memory.o"
 	@echo "... main_memory.i"
 	@echo "... main_memory.s"

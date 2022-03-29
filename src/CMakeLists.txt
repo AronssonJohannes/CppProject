@@ -6,4 +6,5 @@ target_sources(clientserver
         memory_db.cc
         message_handler.cc
         ourserver.cc
+        client.cc
 )

@@ -11,7 +11,6 @@ using std::string;
 using std::tuple;
 
 class DiskDB : public Database {
-
     public:
         DiskDB();
 
@@ -23,10 +22,13 @@ class DiskDB : public Database {
         void delete_article(int article_id, int newsgroup_id);
         tuple<string, string, string> get_article(int article_id, int newsgroup_id);
     private:
-        bool PathExist(const string &path);
-        std::vector<string> FilesInPath(const string &path);
-        //tuple<int, string> CreateNGTuple(const string& ng_path);
         string filepath = "./database";
+        bool PathExist(const string &path);
+        tuple<int, string> CreateNGTuple(const string& ng_path);
+        tuple<int, string> CreateATuple(const string& a_path);
+        std::vector<string> FilesInPath(const string &path);
+        void CreateDBInfo();
+        //tuple<int, string> CreateNGTuple(const string& ng_path);
 };
 
 /* file structure:

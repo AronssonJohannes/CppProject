@@ -2,6 +2,10 @@
 #define OUR_SERVER_H
 
 #include "server.h"
+#include "message_handler.h"
+#include "exceptions.h"
+#include "connectionclosedexception.h"
+
 
 class OurServer{
     public:

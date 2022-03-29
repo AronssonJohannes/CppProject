@@ -6,6 +6,7 @@ using std::cerr;
 using std::endl;
 using std::vector;
 using std::get;
+using std::cout;
 
 Server OurServer::init(int argc, char* argv[])
 {
@@ -75,6 +76,7 @@ void OurServer::run()
                 {
                 // TODO: Fix this. It's a tuple now
                 case Protocol::COM_LIST_NG:
+                    cout << "Listing NG" << endl;
                     com_end();
                     news_groups = db.list_newsgroups();
                     mh.send_code(Protocol::ANS_LIST_NG);
@@ -98,11 +100,13 @@ void OurServer::run()
                     {
                         db.create_newsgroup(ng_name);
                         mh.send_code(Protocol::ANS_ACK);
+                        cout << "Created NG" << endl;
                     }
                     catch (NewsgroupException &)
                     {
                         mh.send_code(Protocol::ANS_NAK);
                         mh.send_code(Protocol::ERR_NG_ALREADY_EXISTS);
+                        cout << "Failed to create NG" << endl;
                     }
                     mh.send_code(Protocol::ANS_END);
                     break;
@@ -115,11 +119,13 @@ void OurServer::run()
                     {
                         db.delete_newsgroup(ng_id);
                         mh.send_code(Protocol::ANS_ACK);
+                        cout << "Deleted NG" << endl;
                     }
                     catch (NewsgroupException &)
                     {
                         mh.send_code(Protocol::ANS_NAK);
                         mh.send_code(Protocol::ERR_NG_DOES_NOT_EXIST);
+                        cout << "Failed to delete NG" << endl;
                     }
                     mh.send_code(Protocol::ANS_END);
                     break;
@@ -140,12 +146,14 @@ void OurServer::run()
                                 mh.send_int_parameter(get<0>(art));
                                 mh.send_string_parameter(get<1>(art));
                             }
+                            cout << "Listing articles" << endl;
                         }
                     }
                     catch (NewsgroupException &)
                     {
                         mh.send_code(Protocol::ANS_NAK);
                         mh.send_code(Protocol::ERR_NG_DOES_NOT_EXIST);
+                        cout << "Failed to list articles" << endl;
                     }
                     mh.send_code(Protocol::ANS_END);
                     break;
@@ -161,11 +169,13 @@ void OurServer::run()
                     {
                         db.create_article(a_title, a_author, a_text, ng_id);
                         mh.send_code(Protocol::ANS_ACK);
+                        cout << "Creating article" << endl;
                     }
                     catch (NewsgroupException)
                     {
                         mh.send_code(Protocol::ANS_NAK);
                         mh.send_code(Protocol::ERR_NG_DOES_NOT_EXIST);
+                        cout << "Failed to create article" << endl;
                     }
                     mh.send_code(Protocol::ANS_END);
                     break;
@@ -179,16 +189,19 @@ void OurServer::run()
                     {
                         db.delete_article(a_id, ng_id);
                         mh.send_code(Protocol::ANS_ACK);
+                        cout << "Deleted article" << endl;
                     }
                     catch (NewsgroupException &)
                     {
                         mh.send_code(Protocol::ANS_NAK);
                         mh.send_code(Protocol::ERR_NG_DOES_NOT_EXIST);
+                        cout << "Failed to delete article (NG does not exist)" << endl;
                     }
                     catch (ArticleException &)
                     {
                         mh.send_code(Protocol::ANS_NAK);
                         mh.send_code(Protocol::ERR_ART_DOES_NOT_EXIST);
+                        cout << "Failed to delete article (ART does not exist)" << endl;
                     }
                     mh.send_code(Protocol::ANS_END);
                     break;
@@ -205,16 +218,19 @@ void OurServer::run()
                         mh.send_string_parameter(get<0>(article));
                         mh.send_string_parameter(get<1>(article));
                         mh.send_string_parameter(get<2>(article));
+                        cout << "Getting article" << endl;
                     }
                     catch (NewsgroupException &)
                     {
                         mh.send_code(Protocol::ANS_NAK);
                         mh.send_code(Protocol::ERR_NG_DOES_NOT_EXIST);
+                        cout << "Failed to get article (NG does not exist)" << endl;
                     }
                     catch (ArticleException &)
                     {
                         mh.send_code(Protocol::ANS_NAK);
                         mh.send_code(Protocol::ERR_ART_DOES_NOT_EXIST);
+                        cout << "Failed to get article (ART does not exist)" << endl;
                     }
                     mh.send_code(Protocol::ANS_END);
                     break;
@@ -226,7 +242,19 @@ void OurServer::run()
             catch (ProtocolViolationException &e)
             {
                 s.deregisterConnection(conn);
-                std::cout << "Client did not observe proper protocol. Connection terminated.\n";
+                std::cerr << "Client did not observe proper protocol. Connection terminated.\n";
+            }
+            catch (ConnectionClosedException &e) 
+            {
+                s.deregisterConnection(conn);
+                std::cerr << "Connection with a client closed unexpectedly.\n";
+            }
+            catch (const std::exception &e) 
+            {
+            // catch anything thrown within try block that derives from std::exception
+                std::cerr << "Server encountered an unknown error:\n";
+                std::cerr << e.what();
+                exit(0); //Maybe use something else?
             }
         }
     }
