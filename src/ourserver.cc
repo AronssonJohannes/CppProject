@@ -1,4 +1,11 @@
+#include "ourserver.h"
+#include <iostream>
+#include <vector>
 
+using std::cerr;
+using std::endl;
+using std::vector;
+using std::get;
 
 Server OurServer::init(int argc, char* argv[])
 {
@@ -36,15 +43,16 @@ void OurServer::com_end()
 
 void OurServer::run()
 {
+    //TODO: Catch ConnectionClosedException
     // Catch protocolviolation
     for (;;)
     {
-        std::shared_ptr<Connection> conn = waitForActivity();
+        std::shared_ptr<Connection> conn = s.waitForActivity();
         if (!conn)
         {
             conn = std::shared_ptr<Connection>(new Connection());
             //: error: no matching function for call to ‘std::shared_ptr<Connection>::shared_ptr(Connection)’
-            registerConnection(conn);
+            s.registerConnection(conn);
         }
         else
         {
@@ -169,7 +177,7 @@ void OurServer::run()
                     mh.send_code(Protocol::ANS_DELETE_ART);
                     try
                     {
-                        db.delete_article(ng_id, a_id);
+                        db.delete_article(a_id, ng_id);
                         mh.send_code(Protocol::ANS_ACK);
                     }
                     catch (NewsgroupException &)
@@ -192,7 +200,7 @@ void OurServer::run()
                     mh.send_code(Protocol::ANS_GET_ART);
                     try
                     {
-                        article = db.get_article(ng_id, a_id);
+                        article = db.get_article(a_id, ng_id);
                         mh.send_code(Protocol::ANS_ACK);
                         mh.send_string_parameter(get<0>(article));
                         mh.send_string_parameter(get<1>(article));
@@ -217,7 +225,7 @@ void OurServer::run()
             }
             catch (ProtocolViolationException &e)
             {
-                deregisterConnection(conn);
+                s.deregisterConnection(conn);
                 std::cout << "Client did not observe proper protocol. Connection terminated.\n";
             }
         }

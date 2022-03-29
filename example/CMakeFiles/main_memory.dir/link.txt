@@ -1,0 +1,1 @@
+/usr/bin/c++  -O2 -g -DNDEBUG -Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wcast-align -Wno-switch   CMakeFiles/main_memory.dir/main_memory.cc.o  -o main_memory  ../libclientserver.a 

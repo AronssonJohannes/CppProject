@@ -12,7 +12,7 @@ using std::tuple;
 
 class Database {
     public:
-        Database();
+        Database() {}
         // returns a list of tuples with newsgroup id and group title
         virtual std::vector<tuple<int, string>> list_newsgroups()= 0;
         // title as parameter

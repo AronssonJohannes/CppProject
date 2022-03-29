@@ -1,0 +1,82 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/mnt/d/School/EDAF50 - C++/CppProject/src/memory_db.cc
+memory_db.h
+/mnt/d/School/EDAF50 - C++/CppProject/src/memory_db.h
+algorithm
+-
+
+/mnt/d/School/EDAF50 - C++/CppProject/src/ourserver.cc
+ourserver.h
+/mnt/d/School/EDAF50 - C++/CppProject/src/ourserver.h
+iostream
+-
+vector
+-
+
+include/connection.h
+
+include/database.h
+string
+-
+utility
+-
+tuple
+-
+vector
+-
+exceptions.h
+include/exceptions.h
+
+include/exceptions.h
+string
+-
+
+include/memory_db.h
+database.h
+include/database.h
+map
+-
+vector
+-
+string
+-
+utility
+-
+
+include/message_handler.h
+protocol.h
+include/protocol.h
+connection.h
+include/connection.h
+exceptions.h
+include/exceptions.h
+memory
+-
+string
+-
+
+include/ourserver.h
+server.h
+include/server.h
+
+include/protocol.h
+
+include/server.h
+connection.h
+include/connection.h
+message_handler.h
+include/message_handler.h
+memory
+-
+vector
+-
+memory_db.h
+include/memory_db.h
+

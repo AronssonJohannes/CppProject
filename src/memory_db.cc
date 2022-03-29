@@ -61,12 +61,12 @@ void InMemoryDB::delete_article(int article_id, int newsgroup_id){
     }
     auto vec = db.at(newsgroup_id);
     auto it = std::find_if(vec.begin(), vec.end(), 
-            [article_id](const article& article){ return article.id == article_id;} );
+            [article_id](const article& art){ return art.id == article_id;} );
 
     if(it == vec.end()){
         throw ArticleException();
     }
-    vec.erase(it);
+    db.at(newsgroup_id).erase(it);
 }
 
 // error: no matching function for call to ‘find_if(std::vector<InMemoryDB::article>::iterator, std::vector<InMemoryDB::article>::iterator, InMemoryDB::delete_article(int, int)::<lambda(const InMemoryDB::article&)>, std::vector<InMemoryDB::article>::iterator)’
@@ -78,7 +78,7 @@ tuple<string, string, string> InMemoryDB::get_article(int article_id, int newsgr
     }
     auto vec = db.at(newsgroup_id);
     auto it = std::find_if(vec.begin(), vec.end(), 
-            [article_id](const article& article){return article.id == article_id;});
+            [article_id](const article& art){return art.id == article_id;});
     if(it == vec.end()){
         throw ArticleException();
     }

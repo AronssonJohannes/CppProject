@@ -21,7 +21,7 @@ class InMemoryDB : public Database {
             string text;
         };
     public:
-        InMemoryDB();
+        InMemoryDB(){}
         
         //virtual Database();
         std::vector<tuple<int, string>> list_newsgroups();

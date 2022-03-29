@@ -5,14 +5,14 @@
 
 class OurServer{
     public:
-        OurServer(Database database, int argc, char* argv[]): db(database), s(init(argc, argv)){}
-        Server init(int argc, char* argv[]);
+        OurServer(Database& database, int argc, char* argv[]): db(database), s(init(argc, argv)){}
         void run();
-        void com_end();
     private:
         MessageHandler mh;
-        Database db;
+        Database& db;
         Server s;
-    
-}
+        Server init(int argc, char* argv[]);
+        void com_end();
+};
+
 #endif
