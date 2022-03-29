@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/c/Users/johan/git/CppProject
+CMAKE_SOURCE_DIR = "/mnt/d/School/EDAF50 - C++/CppProject"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/Users/johan/git/CppProject
+CMAKE_BINARY_DIR = "/mnt/d/School/EDAF50 - C++/CppProject"
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -126,14 +126,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /mnt/c/Users/johan/git/CppProject && $(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/johan/git/CppProject/CMakeFiles /mnt/c/Users/johan/git/CppProject/example/CMakeFiles/progress.marks
-	cd /mnt/c/Users/johan/git/CppProject && $(MAKE) -f CMakeFiles/Makefile2 example/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/johan/git/CppProject/CMakeFiles 0
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(CMAKE_COMMAND) -E cmake_progress_start "/mnt/d/School/EDAF50 - C++/CppProject/CMakeFiles" "/mnt/d/School/EDAF50 - C++/CppProject/example/CMakeFiles/progress.marks"
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f CMakeFiles/Makefile2 example/all
+	$(CMAKE_COMMAND) -E cmake_progress_start "/mnt/d/School/EDAF50 - C++/CppProject/CMakeFiles" 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /mnt/c/Users/johan/git/CppProject && $(MAKE) -f CMakeFiles/Makefile2 example/clean
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f CMakeFiles/Makefile2 example/clean
 .PHONY : clean
 
 # The main clean target
@@ -143,22 +143,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /mnt/c/Users/johan/git/CppProject && $(MAKE) -f CMakeFiles/Makefile2 example/preinstall
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f CMakeFiles/Makefile2 example/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /mnt/c/Users/johan/git/CppProject && $(MAKE) -f CMakeFiles/Makefile2 example/preinstall
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f CMakeFiles/Makefile2 example/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /mnt/c/Users/johan/git/CppProject && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 example/CMakeFiles/main_memory.dir/rule:
-	cd /mnt/c/Users/johan/git/CppProject && $(MAKE) -f CMakeFiles/Makefile2 example/CMakeFiles/main_memory.dir/rule
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f CMakeFiles/Makefile2 example/CMakeFiles/main_memory.dir/rule
 .PHONY : example/CMakeFiles/main_memory.dir/rule
 
 # Convenience name for target.
@@ -168,12 +168,12 @@ main_memory: example/CMakeFiles/main_memory.dir/rule
 
 # fast build rule for target.
 main_memory/fast:
-	cd /mnt/c/Users/johan/git/CppProject && $(MAKE) -f example/CMakeFiles/main_memory.dir/build.make example/CMakeFiles/main_memory.dir/build
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/main_memory.dir/build.make example/CMakeFiles/main_memory.dir/build
 .PHONY : main_memory/fast
 
 # Convenience name for target.
 example/CMakeFiles/myclient.dir/rule:
-	cd /mnt/c/Users/johan/git/CppProject && $(MAKE) -f CMakeFiles/Makefile2 example/CMakeFiles/myclient.dir/rule
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f CMakeFiles/Makefile2 example/CMakeFiles/myclient.dir/rule
 .PHONY : example/CMakeFiles/myclient.dir/rule
 
 # Convenience name for target.
@@ -183,7 +183,7 @@ myclient: example/CMakeFiles/myclient.dir/rule
 
 # fast build rule for target.
 myclient/fast:
-	cd /mnt/c/Users/johan/git/CppProject && $(MAKE) -f example/CMakeFiles/myclient.dir/build.make example/CMakeFiles/myclient.dir/build
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/myclient.dir/build.make example/CMakeFiles/myclient.dir/build
 .PHONY : myclient/fast
 
 # Convenience name for target.
@@ -203,7 +203,7 @@ main_client/fast:
 
 # Convenience name for target.
 example/CMakeFiles/myserver.dir/rule:
-	cd /mnt/c/Users/johan/git/CppProject && $(MAKE) -f CMakeFiles/Makefile2 example/CMakeFiles/myserver.dir/rule
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f CMakeFiles/Makefile2 example/CMakeFiles/myserver.dir/rule
 .PHONY : example/CMakeFiles/myserver.dir/rule
 
 # Convenience name for target.
@@ -213,7 +213,7 @@ myserver: example/CMakeFiles/myserver.dir/rule
 
 # fast build rule for target.
 myserver/fast:
-	cd /mnt/c/Users/johan/git/CppProject && $(MAKE) -f example/CMakeFiles/myserver.dir/build.make example/CMakeFiles/myserver.dir/build
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/myserver.dir/build.make example/CMakeFiles/myserver.dir/build
 .PHONY : myserver/fast
 
 main_client.o: main_client.cc.o
@@ -249,7 +249,7 @@ main_memory.o: main_memory.cc.o
 
 # target to build an object file
 main_memory.cc.o:
-	cd /mnt/c/Users/johan/git/CppProject && $(MAKE) -f example/CMakeFiles/main_memory.dir/build.make example/CMakeFiles/main_memory.dir/main_memory.cc.o
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/main_memory.dir/build.make example/CMakeFiles/main_memory.dir/main_memory.cc.o
 .PHONY : main_memory.cc.o
 
 main_memory.i: main_memory.cc.i
@@ -258,7 +258,7 @@ main_memory.i: main_memory.cc.i
 
 # target to preprocess a source file
 main_memory.cc.i:
-	cd /mnt/c/Users/johan/git/CppProject && $(MAKE) -f example/CMakeFiles/main_memory.dir/build.make example/CMakeFiles/main_memory.dir/main_memory.cc.i
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/main_memory.dir/build.make example/CMakeFiles/main_memory.dir/main_memory.cc.i
 .PHONY : main_memory.cc.i
 
 main_memory.s: main_memory.cc.s
@@ -267,7 +267,7 @@ main_memory.s: main_memory.cc.s
 
 # target to generate assembly for a file
 main_memory.cc.s:
-	cd /mnt/c/Users/johan/git/CppProject && $(MAKE) -f example/CMakeFiles/main_memory.dir/build.make example/CMakeFiles/main_memory.dir/main_memory.cc.s
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/main_memory.dir/build.make example/CMakeFiles/main_memory.dir/main_memory.cc.s
 .PHONY : main_memory.cc.s
 
 myclient.o: myclient.cc.o
@@ -276,7 +276,7 @@ myclient.o: myclient.cc.o
 
 # target to build an object file
 myclient.cc.o:
-	cd /mnt/c/Users/johan/git/CppProject && $(MAKE) -f example/CMakeFiles/myclient.dir/build.make example/CMakeFiles/myclient.dir/myclient.cc.o
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/myclient.dir/build.make example/CMakeFiles/myclient.dir/myclient.cc.o
 .PHONY : myclient.cc.o
 
 myclient.i: myclient.cc.i
@@ -285,7 +285,7 @@ myclient.i: myclient.cc.i
 
 # target to preprocess a source file
 myclient.cc.i:
-	cd /mnt/c/Users/johan/git/CppProject && $(MAKE) -f example/CMakeFiles/myclient.dir/build.make example/CMakeFiles/myclient.dir/myclient.cc.i
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/myclient.dir/build.make example/CMakeFiles/myclient.dir/myclient.cc.i
 .PHONY : myclient.cc.i
 
 myclient.s: myclient.cc.s
@@ -294,7 +294,7 @@ myclient.s: myclient.cc.s
 
 # target to generate assembly for a file
 myclient.cc.s:
-	cd /mnt/c/Users/johan/git/CppProject && $(MAKE) -f example/CMakeFiles/myclient.dir/build.make example/CMakeFiles/myclient.dir/myclient.cc.s
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/myclient.dir/build.make example/CMakeFiles/myclient.dir/myclient.cc.s
 .PHONY : myclient.cc.s
 
 myserver.o: myserver.cc.o
@@ -303,7 +303,7 @@ myserver.o: myserver.cc.o
 
 # target to build an object file
 myserver.cc.o:
-	cd /mnt/c/Users/johan/git/CppProject && $(MAKE) -f example/CMakeFiles/myserver.dir/build.make example/CMakeFiles/myserver.dir/myserver.cc.o
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/myserver.dir/build.make example/CMakeFiles/myserver.dir/myserver.cc.o
 .PHONY : myserver.cc.o
 
 myserver.i: myserver.cc.i
@@ -312,7 +312,7 @@ myserver.i: myserver.cc.i
 
 # target to preprocess a source file
 myserver.cc.i:
-	cd /mnt/c/Users/johan/git/CppProject && $(MAKE) -f example/CMakeFiles/myserver.dir/build.make example/CMakeFiles/myserver.dir/myserver.cc.i
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/myserver.dir/build.make example/CMakeFiles/myserver.dir/myserver.cc.i
 .PHONY : myserver.cc.i
 
 myserver.s: myserver.cc.s
@@ -321,7 +321,7 @@ myserver.s: myserver.cc.s
 
 # target to generate assembly for a file
 myserver.cc.s:
-	cd /mnt/c/Users/johan/git/CppProject && $(MAKE) -f example/CMakeFiles/myserver.dir/build.make example/CMakeFiles/myserver.dir/myserver.cc.s
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/myserver.dir/build.make example/CMakeFiles/myserver.dir/myserver.cc.s
 .PHONY : myserver.cc.s
 
 # Help Target
@@ -363,6 +363,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /mnt/c/Users/johan/git/CppProject && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
