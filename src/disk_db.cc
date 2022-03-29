@@ -4,6 +4,7 @@
 #include <string>
 #include <utility>
 #include <iostream>
+#include <fstream>
 #include <sys/stat.h>
 #include <dirent.h>
 
@@ -56,11 +57,20 @@ std::vector<tuple<int, string>> DiskDB::list_newsgroups(){
     std::vector<tuple<int, string>> res;
     std::transform(ng_folders.begin(), ng_folders.end(), res.begin(),
                   [](const string& str){  std::cout << "str "<< str << std::endl; return CreateNGTuple(str);});
-    std::cout << "post_t" << std::endl; // not reached, segnentation fault, why?
+    std::cout << "post_t" << std::endl; // not reached, segnentation fault
     return res;
 }
 
 void DiskDB::create_newsgroup(string name){
+  // TODO get next ng_id from db_info
+  int id = 1;
+  string dirname = "/ng_" + id;
+  //mkdir(filepath +"dirname, ---------); //TODO read/write permissions as arg 2
+  // create ng_info
+  string info_path = filepath + dirname + "/ng_info.txt";
+  std::ofstream ofstr(info_path);
+  ofstr << "name:" << name;
+  ofstr.close();
 
 }
 
