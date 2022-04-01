@@ -170,6 +170,19 @@ clientserver/fast:
 .PHONY : clientserver/fast
 
 #=============================================================================
+# Target rules for targets named main_disk
+
+# Build rule for target.
+main_disk: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 main_disk
+.PHONY : main_disk
+
+# fast build rule for target.
+main_disk/fast:
+	$(MAKE) -f example/CMakeFiles/main_disk.dir/build.make example/CMakeFiles/main_disk.dir/build
+.PHONY : main_disk/fast
+
+#=============================================================================
 # Target rules for targets named main_client
 
 # Build rule for target.
@@ -248,6 +261,33 @@ src/connection.s: src/connection.cc.s
 src/connection.cc.s:
 	$(MAKE) -f CMakeFiles/clientserver.dir/build.make CMakeFiles/clientserver.dir/src/connection.cc.s
 .PHONY : src/connection.cc.s
+
+src/disk_db.o: src/disk_db.cc.o
+
+.PHONY : src/disk_db.o
+
+# target to build an object file
+src/disk_db.cc.o:
+	$(MAKE) -f CMakeFiles/clientserver.dir/build.make CMakeFiles/clientserver.dir/src/disk_db.cc.o
+.PHONY : src/disk_db.cc.o
+
+src/disk_db.i: src/disk_db.cc.i
+
+.PHONY : src/disk_db.i
+
+# target to preprocess a source file
+src/disk_db.cc.i:
+	$(MAKE) -f CMakeFiles/clientserver.dir/build.make CMakeFiles/clientserver.dir/src/disk_db.cc.i
+.PHONY : src/disk_db.cc.i
+
+src/disk_db.s: src/disk_db.cc.s
+
+.PHONY : src/disk_db.s
+
+# target to generate assembly for a file
+src/disk_db.cc.s:
+	$(MAKE) -f CMakeFiles/clientserver.dir/build.make CMakeFiles/clientserver.dir/src/disk_db.cc.s
+.PHONY : src/disk_db.cc.s
 
 src/memory_db.o: src/memory_db.cc.o
 
@@ -370,6 +410,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... install/local"
 	@echo "... clientserver"
+	@echo "... main_disk"
 	@echo "... main_client"
 	@echo "... main_memory"
 	@echo "... src/client.o"
@@ -378,6 +419,9 @@ help:
 	@echo "... src/connection.o"
 	@echo "... src/connection.i"
 	@echo "... src/connection.s"
+	@echo "... src/disk_db.o"
+	@echo "... src/disk_db.i"
+	@echo "... src/disk_db.s"
 	@echo "... src/memory_db.o"
 	@echo "... src/memory_db.i"
 	@echo "... src/memory_db.s"

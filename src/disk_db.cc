@@ -5,34 +5,44 @@
 #include <utility>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <sys/stat.h>
 #include <dirent.h>
 #include <filesystem>
 
+
+namespace fs = std::filesystem;
 using std::string;
 using std::tuple;
 
-DiskDB::DiskDB(){
-    CreateDBInfo();
-}
+//DiskDB::
+
+
+// TODO multi word titles, names, etc
+
+// TODO db_info always contains "1" after a run?
+
+
 
 // Checks if db_info exists and creates it if it doesn't
-void DiskDB::CreateDBInfo(){
-    string info_path = filepath + "/db_info.txt";
-    if(!PathExist(info_path)){
-        std::ofstream ofstr(info_path.c_str());
+void DiskDB::initDB(){
+    fs::path p = filepath;
+    fs::create_directory(p);
+    p += "/db_info.txt";
+    if (fs::exists(p)) {
+        std::ofstream ofstr(p.c_str());
         ofstr << "0";
         ofstr.close();
     }
 }
 
-bool DiskDB::PathExist(const string &path)
+bool DiskDB::PathExist(const string &path) //Could replace with fs::exists()
 {
     struct stat buffer;
     return (stat (path.c_str(), &buffer) == 0);
 }
 
-std::vector<string> DiskDB::FilesInPath(const string &path){
+std::vector<string> DiskDB::FilesInPath(const string &path){ //fs::directory_iterator(path) https://stackoverflow.com/questions/612097/how-can-i-get-the-list-of-files-in-a-directory-using-c-or-c
     DIR *dir;
     struct dirent *diread;
     std::vector<string> files;
@@ -42,9 +52,8 @@ std::vector<string> DiskDB::FilesInPath(const string &path){
         }
         closedir (dir);
     } else {
-        perror ("opendir");
-        std::cout << "error path, FilesInPath" << std::endl;
-        // TODO error handling
+       
+        // TODO error handling? 
     }
     return files;
 }
@@ -57,7 +66,10 @@ tuple<int, string> DiskDB::CreateNGTuple(const string& ng_path){
     std::ifstream istr(info_path);
     // int next_id; // discard
     // istr >> next_id;
-    istr >> ng_name;
+    string line;
+    std::getline(istr, line); // ng_name
+    std::istringstream iss(line);
+    ng_name = iss.str();
 
 return std::make_tuple(ng_id, ng_name);
 }
@@ -66,11 +78,15 @@ tuple<int, string> DiskDB::CreateATuple(const string& a_path){
     int a_id = stoi(a_path.substr(2)); // remove "a_"
     string a_name = "No name";
     std::ifstream istr(a_path);
-    istr >> a_name;
+    string line;
+    std::getline(istr, line); // ng_name
+    std::istringstream iss(line);
+    a_name = iss.str();
 
     return std::make_tuple(a_id, a_name);
 }
 
+// TODO allow no newsgroups to exist? removed throw error in filesinpath
 std::vector<tuple<int, string>> DiskDB::list_newsgroups(){
     std::vector<string> all_files = FilesInPath(filepath.c_str());
     std::vector<string> ng_folders;
@@ -84,32 +100,31 @@ std::vector<tuple<int, string>> DiskDB::list_newsgroups(){
 }
 
 void DiskDB::create_newsgroup(string name){
-    // TODO get next ng_id from db_info
     int id;
     std::ifstream ifstr(filepath + "/db_info.txt");
     ifstr >> id;
     ifstr.close();
-    ++id;
+    int next_id = id + 1;
     std::ofstream ofstr(filepath + "/db_info.txt");
-    ofstr << id;
+    ofstr << next_id;
     ofstr.close();
 
     string dirname = filepath + "/ng_";
     dirname += std::to_string(id);
 
-    int status = mkdir(dirname.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+    mkdir(dirname.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH); //fs::create_directory
     // create ng_info file in the folder
     string info_path = dirname + "/ng_info.txt";
     std::ofstream fstr(info_path.c_str());
-    fstr << name;
+    fstr << name << "\n";
+    fstr << 0;
     fstr.close();
 
 }
 
 void DiskDB::delete_newsgroup(int newsgroup_id){
-    string dir = filepath + "/ng_" + std::to_string(newsgroup_id);
-    int res = std::remove_all(dir); //Remove all returns nbr deleted items (0 if dir does not exist)
-    if (res == 0) { throw NewsgroupException(); }
+    fs::path dir = filepath + "/ng_" + std::to_string(newsgroup_id);
+    if (fs::remove_all(dir) == 0) { throw NewsgroupException(); } //remove_all() returns how many were removed, zero if directory never existed
 }
 
 std::vector<tuple<int, string>> DiskDB::list_articles(int newsgroup_id){
@@ -131,28 +146,57 @@ std::vector<tuple<int, string>> DiskDB::list_articles(int newsgroup_id){
 
 void DiskDB::create_article(string title, string author, string text, int newsgroup_id){
     string dir = filepath + "/ng_" + std::to_string(newsgroup_id);
-    int a_id = 2;
+    int a_id;
+    string ng_name;
+    std::ifstream ifstr(filepath + "/ng_info.txt");
+    string line;
+    std::getline(ifstr, line); // ng_name
+    std::istringstream iss(line);
+    ng_name = iss.str();
+
+    ifstr >> a_id;
+    ifstr.close();
+    int next_a_id = a_id + 1;
+    std::ofstream ofstr(filepath + "/ng_info.txt"); // Truncates by default
+    ofstr << ng_name << "\n";
+    ofstr << next_a_id;
+    ofstr.close();
     if (!PathExist(dir)) {
         throw NewsgroupException();
     }
-    std::ofstream ofstr(dir + "/a_" + std::to_string(a_id));
-    ofstr << a_id << "\n";
-    ofstr << title << "\n";
-    ofstr << author << "\n";
-    ofstr << text;
-    ofstr.close();
+    std::ofstream ofstr2(dir + "/a_" + std::to_string(a_id));
+    ofstr2 << a_id << "\n";
+    ofstr2 << title << "\n";
+    ofstr2 << author << "\n";
+    ofstr2 << text;
+    ofstr2.close();
 }
 
 void DiskDB::delete_article(int article_id, int newsgroup_id){
-    string file = filepath + "/ng_" + std::to_string(newsgroup_id);
-    //if (std::exists())
-     + "/a_" + std::to_string(article_id);
-    bool res = remove(file)  //returns true if deleted, else false.
-    if
+    fs::path file = filepath + "/ng_" + std::to_string(newsgroup_id)
+            + "/a_" + std::to_string(article_id); 
+    if (!fs::remove(file)) { throw ArticleException(); } //remove() returns true if deleted, else false.
 }
 
 tuple<string, string, string> DiskDB::get_article(int article_id, int newsgroup_id){
     tuple<string, string, string> res = std::make_tuple("title", "author", "text");
-
-    return res;
+    string a_path = filepath +"/ng_" + std::to_string(newsgroup_id) + "/a_" + std::to_string(article_id);
+    std::ifstream istr(a_path);
+    if(!istr){
+         throw ArticleException(); 
+    }
+    string line;
+    std::getline(istr, line); // id
+    std::getline(istr, line); // title
+    std::istringstream iss(line);
+    string title = iss.str();
+    std::getline(istr, line); // author
+    std::istringstream iss2(line);
+    string author = iss2.str();
+    
+    string text;
+    std::stringstream buffer;
+    buffer << istr.rdbuf();
+    text = buffer.str();
+    return std::make_tuple(title, author, text);
 }

@@ -20,6 +20,13 @@ class InMemoryDB : public Database {
             string title;
             string text;
         };
+        // struct newsgroup{
+        //     newsgroup(string n) : name(n) {}
+        //     int id;
+        //     string name;
+        //     next_art_id{0};
+        //     set<article> articles;
+        // };
     public:
         InMemoryDB(){}
         
@@ -34,8 +41,12 @@ class InMemoryDB : public Database {
     private:
         std::map<int, std::vector<article>> db;
         std::map<int, string> ng_names;
+        // std::map<int, newsgroup> db;
+        std::map<int, int> next_a_ids;
         int next_id{0};
-        int next_art_id{0};
+        // int next_art_id{0}; //
+        // TODO: ovan var inte felet, artikeln försvinner för delete article 0 och article 0 är kvar
 };
+
 
 #endif

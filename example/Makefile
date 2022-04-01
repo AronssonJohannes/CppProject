@@ -157,6 +157,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+example/CMakeFiles/main_disk.dir/rule:
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f CMakeFiles/Makefile2 example/CMakeFiles/main_disk.dir/rule
+.PHONY : example/CMakeFiles/main_disk.dir/rule
+
+# Convenience name for target.
+main_disk: example/CMakeFiles/main_disk.dir/rule
+
+.PHONY : main_disk
+
+# fast build rule for target.
+main_disk/fast:
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/main_disk.dir/build.make example/CMakeFiles/main_disk.dir/build
+.PHONY : main_disk/fast
+
+# Convenience name for target.
 example/CMakeFiles/main_client.dir/rule:
 	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f CMakeFiles/Makefile2 example/CMakeFiles/main_client.dir/rule
 .PHONY : example/CMakeFiles/main_client.dir/rule
@@ -213,6 +228,33 @@ main_client.cc.s:
 	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/main_client.dir/build.make example/CMakeFiles/main_client.dir/main_client.cc.s
 .PHONY : main_client.cc.s
 
+main_disk.o: main_disk.cc.o
+
+.PHONY : main_disk.o
+
+# target to build an object file
+main_disk.cc.o:
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/main_disk.dir/build.make example/CMakeFiles/main_disk.dir/main_disk.cc.o
+.PHONY : main_disk.cc.o
+
+main_disk.i: main_disk.cc.i
+
+.PHONY : main_disk.i
+
+# target to preprocess a source file
+main_disk.cc.i:
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/main_disk.dir/build.make example/CMakeFiles/main_disk.dir/main_disk.cc.i
+.PHONY : main_disk.cc.i
+
+main_disk.s: main_disk.cc.s
+
+.PHONY : main_disk.s
+
+# target to generate assembly for a file
+main_disk.cc.s:
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/main_disk.dir/build.make example/CMakeFiles/main_disk.dir/main_disk.cc.s
+.PHONY : main_disk.cc.s
+
 main_memory.o: main_memory.cc.o
 
 .PHONY : main_memory.o
@@ -252,11 +294,15 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... main_disk"
 	@echo "... main_client"
 	@echo "... main_memory"
 	@echo "... main_client.o"
 	@echo "... main_client.i"
 	@echo "... main_client.s"
+	@echo "... main_disk.o"
+	@echo "... main_disk.i"
+	@echo "... main_disk.s"
 	@echo "... main_memory.o"
 	@echo "... main_memory.i"
 	@echo "... main_memory.s"

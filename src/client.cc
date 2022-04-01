@@ -70,14 +70,16 @@ void Client::news_loop(){
             case 1   :   //create or add ng
             case 2   :
                 try {
-                    mh.send_code(Protocol::COM_CREATE_NG);
+                    
                     cout << "Choose a Newsgroup Name: ";
                     string para;
                     getline(cin, para);
+                    mh.send_code(Protocol::COM_CREATE_NG);
                     mh.send_string_parameter(para);
                     mh.send_code(Protocol::COM_END);
                     endl(cout);
                     check_ans_error();
+                    mh.recv_code();
                 } catch (const std::exception& e) {
                     cout << "Failed: Could not add Newsgroup.";
                 }
@@ -112,12 +114,14 @@ void Client::news_loop(){
                     mh.send_int_parameter(para);
                     mh.send_code(Protocol::COM_END);
                     endl(cout);
-                    check_ans_error();
-                    int size = mh.recv_int_parameter();
-                    for (int i = 0; i < size; i++){
-                        cout << i << "- " << mh.recv_string_parameter() << endl;
+                    if(check_ans_error()){
+                        int size = mh.recv_int_parameter();
+                        for (int i = 0; i < size; i++){
+                            cout << mh.recv_int_parameter() << "- " << mh.recv_string_parameter() << endl;
+                        }
+                        check_ans_error();
                     }
-                    check_ans_error();
+                    
                 } catch (const std::exception& e) {
                     cout << "Failed: Could not List Articles.\n";
                 }
@@ -219,7 +223,6 @@ void Client::news_loop(){
 
             case 12     :   //quit or stop
             case 13     :
-                news_loop();
                 cont = false;
                 break;
 
@@ -236,8 +239,9 @@ void Client::news_stop(){
 //TODO
 }
 
-void Client::check_ans_error(){
+bool Client::check_ans_error(){
     Protocol ans = mh.recv_code();
+    //Protocol topic = ans;
     //cout << "answer: " << static_cast<int>(ans) << endl;
     while(ans != Protocol::ANS_END){
         switch (ans) {
@@ -254,8 +258,8 @@ void Client::check_ans_error(){
                 ans = mh.recv_code();
                 break;
             case Protocol::ANS_LIST_ART:
-                cout << "Listing Articles:\n";
-                ans = Protocol::ANS_END;
+                cout << "Listing Articles:";
+                ans = mh.recv_code();
                 break;
             case Protocol::ANS_CREATE_ART:
                 cout << "Add Article: ";
@@ -268,7 +272,9 @@ void Client::check_ans_error(){
                 break;
             case Protocol::ANS_ACK:
                 cout << "Successful.\n";
-                ans = mh.recv_code();
+                //ans = mh.recv_code();
+                ans = Protocol::ANS_END;
+
                 break;
             case Protocol::ANS_NAK:
                 cout << "Failed.\n";
@@ -276,15 +282,20 @@ void Client::check_ans_error(){
                 break;
             case Protocol::ERR_ART_DOES_NOT_EXIST:
                 cout << "Error: Article does not exist.\n";
+                ans = mh.recv_code();
                 break;
             case Protocol::ERR_NG_ALREADY_EXISTS:
                 cout << "Error: Newsgroup already exists.\n";
+                return false;
                 break;
             case Protocol::ERR_NG_DOES_NOT_EXIST:
                 cout << "Error: Newsgroup does not exist.\n";
+                ans = mh.recv_code();
+                return false;
                 break;
         }
             //ans = mh.recv_code();
     }
+    return true;
 }
 

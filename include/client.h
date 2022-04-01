@@ -14,7 +14,7 @@ class Client {
         void make_cmds();
         void news_loop();
         void news_stop();
-        void check_ans_error();
+        bool check_ans_error();
     private:
         MessageHandler mh;
         vector<string> cmds;

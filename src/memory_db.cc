@@ -1,9 +1,12 @@
 #include "memory_db.h"
 #include <algorithm>
+#include <iostream>
 using std::pair;
 using std::vector;
 using std::string;
 using std::tuple;
+using std::cout;
+using std::endl;
 
 
 vector<tuple<int, string>> InMemoryDB::list_newsgroups(){
@@ -23,7 +26,11 @@ void InMemoryDB::create_newsgroup(string name){
     }
     vector<article> v;
     db[next_id] = v;
-    ng_names[next_id++] = name;
+    // db.insert(std::make_pair<int, vector<article>>(next_id, v));
+    ng_names[next_id] = name;
+    // ng_names.insert(std::make_pair<int, string>(next_id, name));
+    next_a_ids[next_id++] = 0;
+    // next_a_ids.insert(std::make_pair<int, int>(next_id++, 0));
 }
 
 void InMemoryDB::delete_newsgroup(int newsgroup_id){
@@ -32,6 +39,7 @@ void InMemoryDB::delete_newsgroup(int newsgroup_id){
     }
     db.erase(newsgroup_id);
     ng_names.erase(newsgroup_id);
+    next_a_ids.erase(newsgroup_id);
 }
  
 vector<tuple<int, string>> InMemoryDB::list_articles(int newsgroup_id){
@@ -50,7 +58,7 @@ void InMemoryDB::create_article(string title, string author, string text, int ne
     if(db.find(newsgroup_id) == db.end()){
         throw NewsgroupException();
     }
-    article a(next_art_id++, author, title, text);
+    article a(next_a_ids.at(newsgroup_id)++, author, title, text);
     db[newsgroup_id].push_back(a);
 }
 
@@ -61,11 +69,13 @@ void InMemoryDB::delete_article(int article_id, int newsgroup_id){
     }
     auto vec = db.at(newsgroup_id);
     auto it = std::find_if(vec.begin(), vec.end(), 
-            [article_id](const article& art){ return art.id == article_id;} );
+            [article_id](const article& art){return art.id == article_id;} );
 
+    cout << article_id << endl;
     if(it == vec.end()){
         throw ArticleException();
     }
+    cout << "it = " << it->id << endl;
     db.at(newsgroup_id).erase(it);
 }
 
@@ -79,6 +89,8 @@ tuple<string, string, string> InMemoryDB::get_article(int article_id, int newsgr
     auto vec = db.at(newsgroup_id);
     auto it = std::find_if(vec.begin(), vec.end(), 
             [article_id](const article& art){return art.id == article_id;});
+    
+    cout << article_id << endl;
     if(it == vec.end()){
         throw ArticleException();
     }

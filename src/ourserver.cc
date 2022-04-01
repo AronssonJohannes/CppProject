@@ -74,8 +74,7 @@ void OurServer::run()
                 string a_text;
                 switch (mh.recv_code()) // if (mh.recv_code() != COM_END) { break; }
                 {
-                // TODO: Fix this. It's a tuple now
-                case Protocol::COM_LIST_NG:
+                case Protocol::COM_LIST_NG: //TODO: Could probably do without Protocol:: in c++17?
                     cout << "Listing NG" << endl;
                     com_end();
                     news_groups = db.list_newsgroups();
