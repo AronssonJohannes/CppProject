@@ -157,36 +157,6 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-example/CMakeFiles/main_memory.dir/rule:
-	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f CMakeFiles/Makefile2 example/CMakeFiles/main_memory.dir/rule
-.PHONY : example/CMakeFiles/main_memory.dir/rule
-
-# Convenience name for target.
-main_memory: example/CMakeFiles/main_memory.dir/rule
-
-.PHONY : main_memory
-
-# fast build rule for target.
-main_memory/fast:
-	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/main_memory.dir/build.make example/CMakeFiles/main_memory.dir/build
-.PHONY : main_memory/fast
-
-# Convenience name for target.
-example/CMakeFiles/myclient.dir/rule:
-	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f CMakeFiles/Makefile2 example/CMakeFiles/myclient.dir/rule
-.PHONY : example/CMakeFiles/myclient.dir/rule
-
-# Convenience name for target.
-myclient: example/CMakeFiles/myclient.dir/rule
-
-.PHONY : myclient
-
-# fast build rule for target.
-myclient/fast:
-	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/myclient.dir/build.make example/CMakeFiles/myclient.dir/build
-.PHONY : myclient/fast
-
-# Convenience name for target.
 example/CMakeFiles/main_client.dir/rule:
 	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f CMakeFiles/Makefile2 example/CMakeFiles/main_client.dir/rule
 .PHONY : example/CMakeFiles/main_client.dir/rule
@@ -202,19 +172,19 @@ main_client/fast:
 .PHONY : main_client/fast
 
 # Convenience name for target.
-example/CMakeFiles/myserver.dir/rule:
-	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f CMakeFiles/Makefile2 example/CMakeFiles/myserver.dir/rule
-.PHONY : example/CMakeFiles/myserver.dir/rule
+example/CMakeFiles/main_memory.dir/rule:
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f CMakeFiles/Makefile2 example/CMakeFiles/main_memory.dir/rule
+.PHONY : example/CMakeFiles/main_memory.dir/rule
 
 # Convenience name for target.
-myserver: example/CMakeFiles/myserver.dir/rule
+main_memory: example/CMakeFiles/main_memory.dir/rule
 
-.PHONY : myserver
+.PHONY : main_memory
 
 # fast build rule for target.
-myserver/fast:
-	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/myserver.dir/build.make example/CMakeFiles/myserver.dir/build
-.PHONY : myserver/fast
+main_memory/fast:
+	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/main_memory.dir/build.make example/CMakeFiles/main_memory.dir/build
+.PHONY : main_memory/fast
 
 main_client.o: main_client.cc.o
 
@@ -270,60 +240,6 @@ main_memory.cc.s:
 	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/main_memory.dir/build.make example/CMakeFiles/main_memory.dir/main_memory.cc.s
 .PHONY : main_memory.cc.s
 
-myclient.o: myclient.cc.o
-
-.PHONY : myclient.o
-
-# target to build an object file
-myclient.cc.o:
-	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/myclient.dir/build.make example/CMakeFiles/myclient.dir/myclient.cc.o
-.PHONY : myclient.cc.o
-
-myclient.i: myclient.cc.i
-
-.PHONY : myclient.i
-
-# target to preprocess a source file
-myclient.cc.i:
-	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/myclient.dir/build.make example/CMakeFiles/myclient.dir/myclient.cc.i
-.PHONY : myclient.cc.i
-
-myclient.s: myclient.cc.s
-
-.PHONY : myclient.s
-
-# target to generate assembly for a file
-myclient.cc.s:
-	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/myclient.dir/build.make example/CMakeFiles/myclient.dir/myclient.cc.s
-.PHONY : myclient.cc.s
-
-myserver.o: myserver.cc.o
-
-.PHONY : myserver.o
-
-# target to build an object file
-myserver.cc.o:
-	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/myserver.dir/build.make example/CMakeFiles/myserver.dir/myserver.cc.o
-.PHONY : myserver.cc.o
-
-myserver.i: myserver.cc.i
-
-.PHONY : myserver.i
-
-# target to preprocess a source file
-myserver.cc.i:
-	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/myserver.dir/build.make example/CMakeFiles/myserver.dir/myserver.cc.i
-.PHONY : myserver.cc.i
-
-myserver.s: myserver.cc.s
-
-.PHONY : myserver.s
-
-# target to generate assembly for a file
-myserver.cc.s:
-	cd "/mnt/d/School/EDAF50 - C++/CppProject" && $(MAKE) -f example/CMakeFiles/myserver.dir/build.make example/CMakeFiles/myserver.dir/myserver.cc.s
-.PHONY : myserver.cc.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -335,23 +251,15 @@ help:
 	@echo "... install"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
-	@echo "... main_memory"
 	@echo "... edit_cache"
-	@echo "... myclient"
 	@echo "... main_client"
-	@echo "... myserver"
+	@echo "... main_memory"
 	@echo "... main_client.o"
 	@echo "... main_client.i"
 	@echo "... main_client.s"
 	@echo "... main_memory.o"
 	@echo "... main_memory.i"
 	@echo "... main_memory.s"
-	@echo "... myclient.o"
-	@echo "... myclient.i"
-	@echo "... myclient.s"
-	@echo "... myserver.o"
-	@echo "... myserver.i"
-	@echo "... myserver.s"
 .PHONY : help
 
 

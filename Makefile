@@ -170,32 +170,6 @@ clientserver/fast:
 .PHONY : clientserver/fast
 
 #=============================================================================
-# Target rules for targets named main_memory
-
-# Build rule for target.
-main_memory: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 main_memory
-.PHONY : main_memory
-
-# fast build rule for target.
-main_memory/fast:
-	$(MAKE) -f example/CMakeFiles/main_memory.dir/build.make example/CMakeFiles/main_memory.dir/build
-.PHONY : main_memory/fast
-
-#=============================================================================
-# Target rules for targets named myclient
-
-# Build rule for target.
-myclient: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 myclient
-.PHONY : myclient
-
-# fast build rule for target.
-myclient/fast:
-	$(MAKE) -f example/CMakeFiles/myclient.dir/build.make example/CMakeFiles/myclient.dir/build
-.PHONY : myclient/fast
-
-#=============================================================================
 # Target rules for targets named main_client
 
 # Build rule for target.
@@ -209,17 +183,17 @@ main_client/fast:
 .PHONY : main_client/fast
 
 #=============================================================================
-# Target rules for targets named myserver
+# Target rules for targets named main_memory
 
 # Build rule for target.
-myserver: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 myserver
-.PHONY : myserver
+main_memory: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 main_memory
+.PHONY : main_memory
 
 # fast build rule for target.
-myserver/fast:
-	$(MAKE) -f example/CMakeFiles/myserver.dir/build.make example/CMakeFiles/myserver.dir/build
-.PHONY : myserver/fast
+main_memory/fast:
+	$(MAKE) -f example/CMakeFiles/main_memory.dir/build.make example/CMakeFiles/main_memory.dir/build
+.PHONY : main_memory/fast
 
 src/client.o: src/client.cc.o
 
@@ -396,10 +370,8 @@ help:
 	@echo "... edit_cache"
 	@echo "... install/local"
 	@echo "... clientserver"
-	@echo "... main_memory"
-	@echo "... myclient"
 	@echo "... main_client"
-	@echo "... myserver"
+	@echo "... main_memory"
 	@echo "... src/client.o"
 	@echo "... src/client.i"
 	@echo "... src/client.s"
