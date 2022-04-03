@@ -7,9 +7,7 @@
 #include <fstream>
 #include <sstream>
 #include <sys/stat.h>
-#include <dirent.h>
 #include <filesystem>
-
 
 namespace fs = std::filesystem;
 using std::string;
@@ -36,24 +34,10 @@ void DiskDB::initDB(){
     }
 }
 
-bool DiskDB::PathExist(const string &path) //Could replace with fs::exists()
-{
-    struct stat buffer;
-    return (stat (path.c_str(), &buffer) == 0);
-}
-
-std::vector<string> DiskDB::FilesInPath(const string &path){ //fs::directory_iterator(path) https://stackoverflow.com/questions/612097/how-can-i-get-the-list-of-files-in-a-directory-using-c-or-c
-    DIR *dir;
-    struct dirent *diread;
+std::vector<string> DiskDB::FilesInPath(const string &path){
     std::vector<string> files;
-    if ((dir = opendir(path.c_str())) != nullptr) {
-        while ((diread = readdir(dir)) != nullptr) {
-            files.push_back(string(diread->d_name));
-        }
-        closedir (dir);
-    } else {
-       
-        // TODO error handling? 
+    for (const auto& file : fs::directory_iterator(path)) {
+        files.push_back(file.path());
     }
     return files;
 }
@@ -104,33 +88,33 @@ void DiskDB::create_newsgroup(string name){
     std::ifstream ifstr(filepath + "/db_info.txt");
     ifstr >> id;
     ifstr.close();
-    int next_id = id + 1;
-    std::ofstream ofstr(filepath + "/db_info.txt");
-    ofstr << next_id;
-    ofstr.close();
 
-    string dirname = filepath + "/ng_";
-    dirname += std::to_string(id);
+    string dirname = filepath + "/ng_" + std::to_string(id);
 
-    mkdir(dirname.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH); //fs::create_directory
-    // create ng_info file in the folder
-    string info_path = dirname + "/ng_info.txt";
-    std::ofstream fstr(info_path.c_str());
-    fstr << name << "\n";
-    fstr << 0;
-    fstr.close();
+    if(fs::create_directory(dirname)) {
+        std::ofstream ofstr(filepath + "/db_info.txt");
+        ofstr << (id + 1);
+        ofstr.close();
 
+        string info_path = dirname + "/ng_info.txt";
+        std::ofstream fstr(info_path.c_str());
+        fstr << name << "\n";
+        fstr << 0;
+        fstr.close();
+    } else {
+        throw NewsgroupException();
+    }
 }
 
 void DiskDB::delete_newsgroup(int newsgroup_id){
-    fs::path dir = filepath + "/ng_" + std::to_string(newsgroup_id);
+    string dir = filepath + "/ng_" + std::to_string(newsgroup_id);
     if (fs::remove_all(dir) == 0) { throw NewsgroupException(); } //remove_all() returns how many were removed, zero if directory never existed
 }
 
 std::vector<tuple<int, string>> DiskDB::list_articles(int newsgroup_id){
     std::vector<tuple<int, string>> res;
     string dir = filepath + "/ng_" + std::to_string(newsgroup_id);
-    if(!PathExist(dir)){
+    if(!fs::exists(dir)){
         throw NewsgroupException();
     }
     std::vector<string> all_files = FilesInPath(filepath.c_str());
@@ -161,7 +145,7 @@ void DiskDB::create_article(string title, string author, string text, int newsgr
     ofstr << ng_name << "\n";
     ofstr << next_a_id;
     ofstr.close();
-    if (!PathExist(dir)) {
+    if (!fs::exists(dir)) {
         throw NewsgroupException();
     }
     std::ofstream ofstr2(dir + "/a_" + std::to_string(a_id));
