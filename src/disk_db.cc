@@ -12,6 +12,7 @@
 namespace fs = std::filesystem;
 using std::string;
 using std::tuple;
+using std::vector;
 
 //DiskDB::
 
@@ -25,7 +26,7 @@ using std::tuple;
 // Checks if db_info exists and creates it if it doesn't
 void DiskDB::initDB(){
     fs::create_directory(filepath);
-    string p = filepath + "/db_info.txt";
+    string p = filepath + "/db_info";
     if (!fs::exists(p)) {
         std::ofstream ofstr(p);
         ofstr << "0";
@@ -33,70 +34,39 @@ void DiskDB::initDB(){
     }
 }
 
-std::vector<string> DiskDB::FilesInPath(const string &path){
-    std::vector<string> files;
-    for (const auto& file : fs::directory_iterator(path)) {
-        files.push_back(file.path());
-    }
-    return files;
-}
-
-tuple<int, string> DiskDB::CreateNGTuple(const string& ng_path){
-    int ng_id = stoi(ng_path.substr(3)); // remove "ng_"
-    string ng_name = "No name";
-    string info_path = ng_path;
-
-    std::ifstream istr(info_path);
-    // int next_id; // discard
-    // istr >> next_id;
-    string line;
-    std::getline(istr, line); // ng_name
-    std::istringstream iss(line);
-    ng_name = iss.str();
-
-return std::make_tuple(ng_id, ng_name);
-}
-
-tuple<int, string> DiskDB::CreateATuple(const string& a_path){
-    int a_id = stoi(a_path.substr(2)); // remove "a_"
-    string a_name = "No name";
-    std::ifstream istr(a_path);
-    string line;
-    std::getline(istr, line); // ng_name
-    std::istringstream iss(line);
-    a_name = iss.str();
-
-    return std::make_tuple(a_id, a_name);
-}
-
 // TODO allow no newsgroups to exist? removed throw error in filesinpath
-std::vector<tuple<int, string>> DiskDB::list_newsgroups(){
-    std::vector<string> all_files = FilesInPath(filepath.c_str());
-    std::vector<string> ng_folders;
-    std::copy_if (all_files.begin(), all_files.end(), std::back_inserter(ng_folders),
-                  [](const string& str){return str.find("ng")==0;} );
- 
-    std::vector<tuple<int, string>> res;
-    std::for_each(ng_folders.begin(), ng_folders.end(), 
-        [&](const string& str){res.push_back(CreateNGTuple(str));});
-    return res;
+vector<tuple<int, string>> DiskDB::list_newsgroups(){
+    vector<tuple<int, string>> newsgroups;
+    for (const auto& dir_entry : fs::recursive_directory_iterator(filepath)) {
+        fs::path file = dir_entry.path();
+        if (file.filename() == "ng_info") {
+            std::ifstream istr(file.relative_path());
+            string ng_id;
+            string ng_name;
+            std::getline(istr, ng_id);
+            std::getline(istr, ng_name);
+            newsgroups.emplace_back(stoi(ng_id), ng_name);
+        }
+    }
+    return newsgroups;
 }
 
 void DiskDB::create_newsgroup(string name){
     int id;
-    std::ifstream ifstr(filepath + "/db_info.txt");
+    std::ifstream ifstr(filepath + "/db_info");
     ifstr >> id;
     ifstr.close();
 
     string dirname = filepath + "/ng_" + std::to_string(id);
 
-    if(fs::create_directory(dirname)) {
-        std::ofstream ofstr(filepath + "/db_info.txt");
-        ofstr << (id + 1);
+    if (fs::create_directory(dirname)) {
+        std::ofstream ofstr(filepath + "/db_info");
+        ofstr << (id + 1); //next id
         ofstr.close();
 
-        string info_path = dirname + "/ng_info.txt";
+        string info_path = dirname + "/ng_info";
         std::ofstream fstr(info_path.c_str());
+        fstr << id << "\n";
         fstr << name << "\n";
         fstr << 0;
         fstr.close();
@@ -110,43 +80,50 @@ void DiskDB::delete_newsgroup(int newsgroup_id){
     if (fs::remove_all(dir) == 0) { throw NewsgroupException(); } //remove_all() returns how many were removed, zero if directory never existed
 }
 
-std::vector<tuple<int, string>> DiskDB::list_articles(int newsgroup_id){
-    std::vector<tuple<int, string>> res;
+vector<tuple<int, string>> DiskDB::list_articles(int newsgroup_id){
     string dir = filepath + "/ng_" + std::to_string(newsgroup_id);
     if(!fs::exists(dir)){
         throw NewsgroupException();
     }
-    std::vector<string> all_files = FilesInPath(filepath.c_str());
-    std::vector<string> articles;
-    std::copy_if (all_files.begin(), all_files.end(), std::back_inserter(articles),
-                  [](const string& str){return str.find("a_")==0;} );
 
-    std::for_each(articles.begin(), articles.end(), 
-        [&](const string& str){res.push_back(CreateATuple(str));});
-    
-    return res;
+    vector<tuple<int, string>> articles;
+    for (const auto& dir_entry : fs::directory_iterator(dir)) {
+        fs::path file = dir_entry.path();
+        if (file.filename() != "ng_info") {
+            std::ifstream istr(file.relative_path());
+            string a_id;
+            string a_name;
+            std::getline(istr, a_id);
+            std::getline(istr, a_name);
+            articles.emplace_back(stoi(a_id), a_name);
+        }
+    }
+    return articles;
 }
+
 
 void DiskDB::create_article(string title, string author, string text, int newsgroup_id){
     string dir = filepath + "/ng_" + std::to_string(newsgroup_id);
-    int a_id;
-    string ng_name;
-    std::ifstream ifstr(filepath + "/ng_info.txt");
-    string line;
-    std::getline(ifstr, line); // ng_name
-    std::istringstream iss(line);
-    ng_name = iss.str();
 
-    ifstr >> a_id;
-    ifstr.close();
-    int next_a_id = a_id + 1;
-    std::ofstream ofstr(filepath + "/ng_info.txt"); // Truncates by default
-    ofstr << ng_name << "\n";
-    ofstr << next_a_id;
-    ofstr.close();
     if (!fs::exists(dir)) {
         throw NewsgroupException();
     }
+
+    int a_id;
+    int ng_id;
+    string ng_name;
+    std::ifstream ifstr(dir + "/ng_info");
+    ifstr >> ng_id;
+    std::getline(ifstr, ng_name);
+    ifstr >> a_id;
+    ifstr.close();
+
+    std::ofstream ofstr(dir + "/ng_info"); // Truncates by default
+    ofstr << ng_id << "\n";
+    ofstr << ng_name << "\n";
+    ofstr << a_id + 1; //next a_id
+    ofstr.close();
+
     std::ofstream ofstr2(dir + "/a_" + std::to_string(a_id));
     ofstr2 << a_id << "\n";
     ofstr2 << title << "\n";
@@ -156,28 +133,26 @@ void DiskDB::create_article(string title, string author, string text, int newsgr
 }
 
 void DiskDB::delete_article(int article_id, int newsgroup_id){
-    fs::path file = filepath + "/ng_" + std::to_string(newsgroup_id)
-            + "/a_" + std::to_string(article_id); 
+    string file = filepath + "/ng_" + std::to_string(newsgroup_id);
+    if (!fs::exists(file)) { throw NewsgroupException(); } //if the news group dir doesn't exist
+    file += "/a_" + std::to_string(article_id); 
     if (!fs::remove(file)) { throw ArticleException(); } //remove() returns true if deleted, else false.
 }
 
 tuple<string, string, string> DiskDB::get_article(int article_id, int newsgroup_id){
-    tuple<string, string, string> res = std::make_tuple("title", "author", "text");
     string a_path = filepath +"/ng_" + std::to_string(newsgroup_id) + "/a_" + std::to_string(article_id);
     std::ifstream istr(a_path);
     if(!istr){
          throw ArticleException(); 
     }
-    string line;
-    std::getline(istr, line); // id
-    std::getline(istr, line); // title
-    std::istringstream iss(line);
-    string title = iss.str();
-    std::getline(istr, line); // author
-    std::istringstream iss2(line);
-    string author = iss2.str();
-    
+    string title;
+    string author;
     string text;
+
+    std::getline(istr, title); // skip id
+    std::getline(istr, title); // title
+    std::getline(istr, author); // author
+    
     std::stringstream buffer;
     buffer << istr.rdbuf();
     text = buffer.str();

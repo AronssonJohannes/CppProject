@@ -23,10 +23,6 @@ class DiskDB : public Database {
         tuple<string, string, string> get_article(int article_id, int newsgroup_id);
     private:
         string filepath = "./database";
-        bool PathExist(const string &path);
-        tuple<int, string> CreateNGTuple(const string& ng_path);
-        tuple<int, string> CreateATuple(const string& a_path);
-        std::vector<string> FilesInPath(const string &path);
         void initDB();
         //tuple<int, string> CreateNGTuple(const string& ng_path);
 };
