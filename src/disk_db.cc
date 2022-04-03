@@ -24,11 +24,10 @@ using std::tuple;
 
 // Checks if db_info exists and creates it if it doesn't
 void DiskDB::initDB(){
-    fs::path p = filepath;
-    fs::create_directory(p);
-    p += "/db_info.txt";
-    if (fs::exists(p)) {
-        std::ofstream ofstr(p.c_str());
+    fs::create_directory(filepath);
+    string p = filepath + "/db_info.txt";
+    if (!fs::exists(p)) {
+        std::ofstream ofstr(p);
         ofstr << "0";
         ofstr.close();
     }
