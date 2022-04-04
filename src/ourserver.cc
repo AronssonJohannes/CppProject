@@ -143,8 +143,8 @@ void OurServer::run()
                                 mh.send_int_parameter(get<0>(art));
                                 mh.send_string_parameter(get<1>(art));
                             }
-                            cout << "Listing articles" << endl;
                         }
+                        cout << "Listing articles" << endl;
                     }
                     catch (NewsgroupException &)
                     {
