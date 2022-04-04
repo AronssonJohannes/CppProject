@@ -79,8 +79,7 @@ void Client::news_loop(){
                     mh.send_code(Protocol::COM_END);
                     endl(cout);
                     check_ans_error();
-                    mh.recv_code();
-                } catch (const std::exception& e) {
+                } catch (const ProtocolViolationException e) {
                     cout << "Failed: Could not add Newsgroup.";
                 }
                 break;
@@ -165,31 +164,26 @@ void Client::news_loop(){
             case 8      :    //create or add art
             case 9      :
                 try {
-                    mh.send_code(Protocol::COM_CREATE_NG);
+                    mh.send_code(Protocol::COM_CREATE_ART);
                     cout << "Choose a Newsgroup Number: ";
                     int para;
                     string str_para;
                     getline(cin, str_para);
                     para = stoi(str_para);
                     mh.send_int_parameter(para);
-                    endl(cout);
                     cout << "Title: ";
                     string para2;
                     getline(cin, para2);
                     mh.send_string_parameter(para2);
-                    endl(cout);
                     cout << "Author: ";
                     string para3;
                     getline(cin, para3);
                     mh.send_string_parameter(para3);
-                    endl(cout);
                     cout << "Content: \n";
                     string para4;
                     getline(cin, para4);
                     mh.send_string_parameter(para4);
-                    endl(cout);
                     mh.send_code(Protocol::COM_END);
-                    endl(cout);
                     check_ans_error();
                 } catch (const std::exception& e) {
                     cout << "Failed: Could not add Newsgroup.";
@@ -236,18 +230,19 @@ void Client::news_loop(){
 }
 
 void Client::news_stop(){
-//TODO
+    //TODO
 }
 
 bool Client::check_ans_error(){
     Protocol ans = mh.recv_code();
-    //Protocol topic = ans;
+    bool ret = true;
+    Protocol topic = ans;
     //cout << "answer: " << static_cast<int>(ans) << endl;
     while(ans != Protocol::ANS_END){
         switch (ans) {
             case Protocol::ANS_LIST_NG:
-                cout << "Listing Newsgroups:\n";
-                ans = Protocol::ANS_END;
+                cout << "Listing Newsgroups: Successful\n";
+                return true;
                 break;
             case Protocol::ANS_CREATE_NG:
                 cout << "Add Newsgroup: ";
@@ -263,22 +258,30 @@ bool Client::check_ans_error(){
                 break;
             case Protocol::ANS_CREATE_ART:
                 cout << "Add Article: ";
+                ans = mh.recv_code();
                 break;
             case Protocol::ANS_DELETE_ART:
                 cout << "Deleting Article: ";
+                ans = mh.recv_code();
                 break;
             case Protocol::ANS_GET_ART:
                 cout << "Retreiving Article: ";
+                ans = mh.recv_code();
                 break;
             case Protocol::ANS_ACK:
                 cout << "Successful.\n";
-                //ans = mh.recv_code();
-                ans = Protocol::ANS_END;
-
+                if(topic == Protocol::ANS_CREATE_NG || 
+                    topic == Protocol::ANS_DELETE_NG ||
+                    topic == Protocol:: ANS_CREATE_ART){
+                    ans = mh.recv_code();
+                } else {
+                    ans = Protocol::ANS_END;
+                }
                 break;
             case Protocol::ANS_NAK:
                 cout << "Failed.\n";
                 ans = mh.recv_code();
+                ret = false;
                 break;
             case Protocol::ERR_ART_DOES_NOT_EXIST:
                 cout << "Error: Article does not exist.\n";
@@ -286,16 +289,15 @@ bool Client::check_ans_error(){
                 break;
             case Protocol::ERR_NG_ALREADY_EXISTS:
                 cout << "Error: Newsgroup already exists.\n";
-                return false;
+                ans = mh.recv_code();
                 break;
             case Protocol::ERR_NG_DOES_NOT_EXIST:
                 cout << "Error: Newsgroup does not exist.\n";
                 ans = mh.recv_code();
-                return false;
                 break;
         }
             //ans = mh.recv_code();
     }
-    return true;
+    return ret;
 }
 
