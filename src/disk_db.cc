@@ -117,10 +117,10 @@ void DiskDB::create_article(string title, string author, string text, int newsgr
     }
 
     int a_id;
-    int ng_id;
+    string ng_id;
     string ng_name;
     std::ifstream ifstr(dir + "/ng_info");
-    ifstr >> ng_id;
+    std::getline(ifstr, ng_id);
     std::getline(ifstr, ng_name);
     ifstr >> a_id;
     ifstr.close();
