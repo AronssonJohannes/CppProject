@@ -39,27 +39,23 @@ void OurServer::com_end()
     if (mh.recv_code() != Protocol::COM_END)
     {
         throw ProtocolViolationException();
-    } // COM_END EXPECTED
+    }
 }
 
 void OurServer::run()
 {
-    //TODO: Catch ConnectionClosedException
-    // Catch protocolviolation
     for (;;)
     {
         std::shared_ptr<Connection> conn = s.waitForActivity();
         if (!conn)
         {
             conn = std::shared_ptr<Connection>(new Connection());
-            //: error: no matching function for call to ‘std::shared_ptr<Connection>::shared_ptr(Connection)’
             s.registerConnection(conn);
         }
         else
         {
-            mh = MessageHandler(conn); // Alter MessageHander so we don't have to overrite every time?
+            mh = MessageHandler(conn); 
 
-            // Make big try-catch and just throw from all the cases??
             try
             {
 
@@ -72,9 +68,9 @@ void OurServer::run()
                 string a_title;
                 string a_author;
                 string a_text;
-                switch (mh.recv_code()) // if (mh.recv_code() != COM_END) { break; }
+                switch (mh.recv_code())
                 {
-                case Protocol::COM_LIST_NG: //TODO: Could probably do without Protocol:: in c++17?
+                case Protocol::COM_LIST_NG:
                     cout << "Listing NG" << endl;
                     com_end();
                     news_groups = db.list_newsgroups();
@@ -235,7 +231,7 @@ void OurServer::run()
                     break;
 
                 default:
-                    throw ProtocolViolationException(); // Commandbyte not recognized
+                    throw ProtocolViolationException();
                 }
             }
             catch (ProtocolViolationException &e)
@@ -250,10 +246,9 @@ void OurServer::run()
             }
             catch (const std::exception &e) 
             {
-            // catch anything thrown within try block that derives from std::exception
                 std::cerr << "Server encountered an unknown error:\n";
                 std::cerr << e.what();
-                exit(0); //Maybe use something else?
+                exit(0);
             }
         }
     }
