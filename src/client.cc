@@ -36,6 +36,38 @@ void Client::make_cmds(){
 
 }
 
+string Client:: write_article(){
+
+    string res = "";
+    string prev = "";
+    string inp;
+    while(getline(cin, inp)){
+        //cout << "input:" << inp << endl;
+        if(inp.compare("q") == 0){
+            bool fin = false;
+            string tmp;
+            while(getline(cin, tmp)){
+                if(tolower(tmp[0]) == 'y'){
+                    fin = true;
+                    break;
+                } else if(tolower(tmp[0]) == 'n'){
+                    break;
+                } else {
+                     cout << "Are you sure you want to finish writing the Article?<Y/n>";
+                }
+            }
+            if(fin){
+                break;
+            }
+        }
+        res = res + inp + "\n";
+    }
+
+    cout << "content: " << res << endl;
+
+    return res;
+}
+
 void Client::news_loop(){
     bool cont = true;
     while(cont){
@@ -170,9 +202,8 @@ void Client::news_loop(){
                     string para3;
                     getline(cin, para3);
                     mh.send_string_parameter(para3);
-                    cout << "Content: \n";
-                    string para4;
-                    getline(cin, para4);
+                    cout << "Content (When done, write q and press enter): \n";
+                    string para4 = write_article();
                     mh.send_string_parameter(para4);
                     mh.send_code(Protocol::COM_END);
                     check_ans_error();
