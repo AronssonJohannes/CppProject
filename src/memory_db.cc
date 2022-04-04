@@ -62,7 +62,6 @@ void InMemoryDB::create_article(string title, string author, string text, int ne
     db[newsgroup_id].push_back(a);
 }
 
-// 0 allt funkar, >0 newsgroup finns ej, <0 article finns ej
 void InMemoryDB::delete_article(int article_id, int newsgroup_id){
     if(ng_names.find(newsgroup_id) == ng_names.end()){
         throw NewsgroupException();
@@ -75,12 +74,11 @@ void InMemoryDB::delete_article(int article_id, int newsgroup_id){
     if(it == vec.end()){
         throw ArticleException();
     }
-    cout << "it = " << it->id << endl;
-    db.at(newsgroup_id).erase(it);
+    cout << "it = " << it->title << endl;
+    vec.erase(it);
+    db.at(newsgroup_id) = vec;
+    // db.at(newsgroup_id).erase(it);
 }
-
-// error: no matching function for call to ‘find_if(std::vector<InMemoryDB::article>::iterator, std::vector<InMemoryDB::article>::iterator, InMemoryDB::delete_article(int, int)::<lambda(const InMemoryDB::article&)>, std::vector<InMemoryDB::article>::iterator)’
-//    64 |             [article_id](const article& article){return article.id == article_id;}, vec.end());
 
 tuple<string, string, string> InMemoryDB::get_article(int article_id, int newsgroup_id){
     if(ng_names.find(newsgroup_id) == ng_names.end()){

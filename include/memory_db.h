@@ -10,11 +10,20 @@
 
 using std::string;
 using std::tuple;
+using std::swap;
 
 class InMemoryDB : public Database {
     private:
         struct article{
             article(int i, string a, string ti, string te): id{i}, author{a}, title{ti}, text{te}{}
+            article& operator=(const article&)=default;
+            // article& operator=(article a){  //article operator=(const article&)=default
+            //     swap(id, a.id);
+            //     swap(author, a.author);
+            //     swap(title, a.title);
+            //     swap(text, a.text);
+            //     return *this;
+            // }
             int id;
             string author;
             string title;
