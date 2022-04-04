@@ -2,9 +2,14 @@
 
 using std::string;
 
+
+void MessageHandler::set_connection(const std::shared_ptr<Connection>& conn) {
+    connection = conn;
+}
+
 //MessageHandler(std::shared_ptr<Connection> connection): connection(connection){}
 void MessageHandler::send_byte(int code){
-    (*connection).write(code);
+    connection->write(code);
 } //throws ConnectionClosedException
 
 void MessageHandler::send_code(Protocol code){
@@ -32,7 +37,7 @@ void MessageHandler::send_string_parameter(const string& param){
 }
 
 int MessageHandler::recv_byte(){
-    return (*connection).read();
+    return connection->read();
 } // throws ConnectionClosedException
 
 Protocol MessageHandler::recv_code(){

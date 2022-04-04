@@ -8,13 +8,14 @@
 
 
 class OurServer{
+    
     public:
-        OurServer(Database& database, int argc, char* argv[]): db(database), s(init(argc, argv)){}
+        OurServer(Database& database, int argc, char* argv[]): db(database), s(init(argc, argv)), mh{MessageHandler()} {}
         void run();
     private:
-        MessageHandler mh;
         Database& db;
         Server s;
+        MessageHandler mh;
         Server init(int argc, char* argv[]);
         void com_end();
 };
