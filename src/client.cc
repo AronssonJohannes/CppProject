@@ -46,6 +46,7 @@ string Client:: write_article(){
         if(inp.compare("q") == 0){
             bool fin = false;
             string tmp;
+            cout << "Are you sure you want to finish writing the Article?<Y/n>";
             while(getline(cin, tmp)){
                 if(tolower(tmp[0]) == 'y'){
                     fin = true;
