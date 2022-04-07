@@ -44,17 +44,19 @@ void OurServer::com_end()
 
 void OurServer::run()
 {
+    std::shared_ptr<Connection> conn;
     for (;;)
     {
-        std::shared_ptr<Connection> conn = s.waitForActivity();
+        conn = s.waitForActivity();
         if (!conn)
         {
-            conn = std::shared_ptr<Connection>(new Connection());
+            conn = std::make_shared<Connection>();
             s.registerConnection(conn);
+            cout << "New client connects" << endl;
         }
         else
         {
-            mh = MessageHandler(conn); 
+            mh.set_connection(conn); 
 
             try
             {
@@ -141,8 +143,8 @@ void OurServer::run()
                                 mh.send_int_parameter(get<0>(art));
                                 mh.send_string_parameter(get<1>(art));
                             }
-                            cout << "Listing articles" << endl;
                         }
+                        cout << "Listing articles" << endl;
                     }
                     catch (NewsgroupException &)
                     {

@@ -12,7 +12,8 @@
 class MessageHandler {
     public:
         MessageHandler(const std::shared_ptr<Connection>& conn): connection(conn){}
-        MessageHandler(){}
+        MessageHandler(): connection{std::make_shared<Connection>()} {}
+        void set_connection(const std::shared_ptr<Connection>& conn);
         void send_code(Protocol code);
         void send_int(int value);
         void send_int_parameter(int param);
