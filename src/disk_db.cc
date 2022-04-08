@@ -14,15 +14,6 @@ using std::string;
 using std::tuple;
 using std::vector;
 
-//DiskDB::
-
-
-// TODO multi word titles, names, etc
-
-// TODO db_info always contains "1" after a run?
-
-
-
 // Checks if db_info exists and creates it if it doesn't
 void DiskDB::initDB(){
     fs::create_directory(filepath);
@@ -34,7 +25,6 @@ void DiskDB::initDB(){
     }
 }
 
-// TODO allow no newsgroups to exist? removed throw error in filesinpath
 vector<tuple<int, string>> DiskDB::list_newsgroups(){
     vector<tuple<int, string>> newsgroups;
     for (const auto& dir_entry : fs::recursive_directory_iterator(filepath)) {

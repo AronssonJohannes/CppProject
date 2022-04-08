@@ -24,25 +24,5 @@ class DiskDB : public Database {
     private:
         string filepath = "./database";
         void initDB();
-        //tuple<int, string> CreateNGTuple(const string& ng_path);
 };
-
-/* file structure:
-
-database
-    db_info - "next_ng_id"
-    ng_0
-        ng_info - "name, next_a_id"
-        a_0 - "id, title, author, text"
-        a_2 - "id, title, author, text"
-    ng_3 
-        ng_info - "name, next_a_id"
-        a_1 - "id, title, author, text"
-        a_2 - "id, title, author, text"
-        a_5 - "id, title, author, text"
-        a_7 - "id, title, author, text"
-
-name
-3
-*/
 #endif
