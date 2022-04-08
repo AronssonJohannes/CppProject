@@ -36,6 +36,8 @@ CMakeCache.txt
 *.cmake
 /CMakeFiles/
 */CMakeFiles/
+*/*/CMakeFiles
+*/*/*/CMakeFiles
 compile_commands.json
 
 main_client
@@ -45,3 +47,4 @@ myclient
 myserver
 /database/
 install_manifest.txt
+test_server

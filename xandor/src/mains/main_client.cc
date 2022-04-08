@@ -7,7 +7,7 @@
 int main(int argc, char **argv) { //skickar host o port
     //TODO
     if(argc != 3){
-        cout << "Not enough arguments" << endl;
+        cout << "Missing ip or port-number" << endl;
     } else {
         char* host = argv[1];
         int port = stoi(argv[2]);

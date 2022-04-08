@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/mnt/d/School/EDAF50 - C++/CppProject"
+CMAKE_SOURCE_DIR = "/mnt/d/School/EDAF50 - C++/CppProject/xandor"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/mnt/d/School/EDAF50 - C++/CppProject"
+CMAKE_BINARY_DIR = "/mnt/d/School/EDAF50 - C++/CppProject/xandor"
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -126,9 +126,9 @@ install/local/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/mnt/d/School/EDAF50 - C++/CppProject/CMakeFiles" "/mnt/d/School/EDAF50 - C++/CppProject/CMakeFiles/progress.marks"
+	$(CMAKE_COMMAND) -E cmake_progress_start "/mnt/d/School/EDAF50 - C++/CppProject/xandor/CMakeFiles" "/mnt/d/School/EDAF50 - C++/CppProject/xandor/CMakeFiles/progress.marks"
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/mnt/d/School/EDAF50 - C++/CppProject/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/mnt/d/School/EDAF50 - C++/CppProject/xandor/CMakeFiles" 0
 .PHONY : all
 
 # The main clean target
@@ -170,19 +170,6 @@ clientserver/fast:
 .PHONY : clientserver/fast
 
 #=============================================================================
-# Target rules for targets named test_server
-
-# Build rule for target.
-test_server: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 test_server
-.PHONY : test_server
-
-# fast build rule for target.
-test_server/fast:
-	$(MAKE) -f example/CMakeFiles/test_server.dir/build.make example/CMakeFiles/test_server.dir/build
-.PHONY : test_server/fast
-
-#=============================================================================
 # Target rules for targets named main_disk
 
 # Build rule for target.
@@ -192,7 +179,7 @@ main_disk: cmake_check_build_system
 
 # fast build rule for target.
 main_disk/fast:
-	$(MAKE) -f example/CMakeFiles/main_disk.dir/build.make example/CMakeFiles/main_disk.dir/build
+	$(MAKE) -f src/mains/CMakeFiles/main_disk.dir/build.make src/mains/CMakeFiles/main_disk.dir/build
 .PHONY : main_disk/fast
 
 #=============================================================================
@@ -205,7 +192,7 @@ main_client: cmake_check_build_system
 
 # fast build rule for target.
 main_client/fast:
-	$(MAKE) -f example/CMakeFiles/main_client.dir/build.make example/CMakeFiles/main_client.dir/build
+	$(MAKE) -f src/mains/CMakeFiles/main_client.dir/build.make src/mains/CMakeFiles/main_client.dir/build
 .PHONY : main_client/fast
 
 #=============================================================================
@@ -218,7 +205,7 @@ main_memory: cmake_check_build_system
 
 # fast build rule for target.
 main_memory/fast:
-	$(MAKE) -f example/CMakeFiles/main_memory.dir/build.make example/CMakeFiles/main_memory.dir/build
+	$(MAKE) -f src/mains/CMakeFiles/main_memory.dir/build.make src/mains/CMakeFiles/main_memory.dir/build
 .PHONY : main_memory/fast
 
 src/client.o: src/client.cc.o
@@ -423,7 +410,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... install/local"
 	@echo "... clientserver"
-	@echo "... test_server"
 	@echo "... main_disk"
 	@echo "... main_client"
 	@echo "... main_memory"

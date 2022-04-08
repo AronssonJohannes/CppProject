@@ -27,11 +27,8 @@ macro(add_program TESTNAME)
   )
 endmacro()
 
-#add_program(myserver myserver.cc)
-#add_program(myclient myclient.cc)
 add_program(main_memory main_memory.cc)
 add_program(main_client main_client.cc)
 add_program(main_disk main_disk.cc)
-add_program(test_server test_server.cc)
 
-install(TARGETS main_memory main_client main_disk test_server)
+install(TARGETS main_memory main_client main_disk DESTINATION bin)
